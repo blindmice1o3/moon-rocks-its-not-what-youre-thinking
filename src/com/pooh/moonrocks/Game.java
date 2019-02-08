@@ -4,6 +4,7 @@ import com.pooh.moonrocks.display.Display;
 import com.pooh.moonrocks.gfx.Assets;
 import com.pooh.moonrocks.gfx.ImageLoader;
 import com.pooh.moonrocks.gfx.SpriteSheet;
+import com.pooh.moonrocks.states.*;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -21,6 +22,11 @@ public class Game implements Runnable {
     private BufferStrategy bs;
     private Graphics g;
 
+    // States
+    private State gameState;
+    private State menuState;
+    private State settingState;
+
     public Game(String title, int width, int height) {
         this.width = width;
         this.height = height;
@@ -30,11 +36,19 @@ public class Game implements Runnable {
     private void init() {
         display = new Display(title, width, height);
         Assets.init();
+
+        // States
+        gameState = new GameState();
+        menuState = new MenuState();
+        settingState = new SettingState();
+        StateManager.setCurrentState(gameState);
     } // **** end init() ****
 
-    int x = 0;
     private void tick() {
-        x += 1;
+        // If we have a currentState that already exists, call whichever currentState's tick() method.
+        if (StateManager.getCurrentState() != null) {
+            StateManager.getCurrentState().tick();
+        }
     } // **** end tick() ****
 
     private void render() {
@@ -53,7 +67,10 @@ public class Game implements Runnable {
 
         // *** Draw here ***
 
-        g.drawImage(Assets.walkDown1, x, 10, null);
+        // If the currentState already exists, call whichever currentState's render(Graphics) method.
+        if (StateManager.getCurrentState() != null) {
+            StateManager.getCurrentState().render(g);
+        }
 
         // *** End drawing ***
 
@@ -64,6 +81,7 @@ public class Game implements Runnable {
 
     } // **** end render() ****
 
+    // When we call thread.start(), it will call THIS (Game) class's run().
     public void run() {
 
         init();
@@ -128,6 +146,7 @@ public class Game implements Runnable {
 
         running = true;
 
+        // The new Thread is passed a Runnable (something that implements the interface Runnable ---> has a run() method).
         thread = new Thread(this);
         thread.start();
     } // **** end start() ****
