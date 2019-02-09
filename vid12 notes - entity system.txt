@@ -1,7 +1,7 @@
 Entity:
--position (x, y)
--Tick()
--Render()
+-position: (x, y)
+-tick()
+-render()
 
     ^
     |

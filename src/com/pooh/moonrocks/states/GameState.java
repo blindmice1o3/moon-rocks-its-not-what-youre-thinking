@@ -1,23 +1,26 @@
 package com.pooh.moonrocks.states;
 
+import com.pooh.moonrocks.entities.creatures.Player;
 import com.pooh.moonrocks.gfx.Assets;
 
 import java.awt.*;
 
 public class GameState extends State {
 
-    public GameState() {
+    private Player player;
 
+    public GameState() {
+        player = new Player(100, 100);
     } // **** end GameState() constructor ****
 
     @Override
     public void tick() {
-
+        player.tick();
     }
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.sailDown1, 0, 0, null);
+        player.render(g);
     }
 
 } // **** end GameState class ****
