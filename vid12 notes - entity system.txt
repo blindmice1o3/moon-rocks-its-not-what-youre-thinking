@@ -1,0 +1,18 @@
+Entity:
+-position (x, y)
+-Tick()
+-Render()
+
+    ^
+    |
+
+Creature:
+-health
+
+    ^
+    |
+
+Player:
+-Texture
+-Input
+
