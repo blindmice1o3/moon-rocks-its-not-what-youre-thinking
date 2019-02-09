@@ -3,6 +3,7 @@ package com.pooh.moonrocks.states;
 import com.pooh.moonrocks.Game;
 import com.pooh.moonrocks.entities.creatures.Player;
 import com.pooh.moonrocks.gfx.Assets;
+import com.pooh.moonrocks.tiles.Tile;
 
 import java.awt.*;
 
@@ -23,6 +24,7 @@ public class GameState extends State {
     @Override
     public void render(Graphics g) {
         player.render(g);
+        Tile.tiles[2].render(g, 0, 0);
     }
 
 } // **** end GameState class ****

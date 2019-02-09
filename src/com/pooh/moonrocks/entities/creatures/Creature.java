@@ -21,7 +21,7 @@ public abstract class Creature extends Entity {
         speed = DEFAULT_SPEED;
         xMove = 0;
         yMove = 0;
-    } // **** end Creature(float, float) constructor ****
+    } // **** end Creature(float, float, int, int) constructor ****
 
     // This MOVES (i.e. actually changes) the x and y coordinates of the Creature. Used with subclass's getInput(), which
     // SETS the xMove and yMove variables (if no directional keys are pressed, xMove and yMove are set to 0).

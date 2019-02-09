@@ -6,6 +6,8 @@ public class Assets {
 
     private static final int WIDTH = 16, HEIGHT = 16;
 
+    public static BufferedImage dirt, grass, rock;
+
     public static BufferedImage walkDown1, walkDown2,
                                 walkLeft1, walkLeft2,
                                 walkRight1, walkRight2,
@@ -17,6 +19,11 @@ public class Assets {
 
     public static void init() {
         SpriteSheet sheet = new SpriteSheet( ImageLoader.loadImage("/textures/player.gif") );
+        SpriteSheet sheetTile = new SpriteSheet( ImageLoader.loadImage("/textures/tile_map(B04505_03_03).jpg") );
+
+        dirt = sheetTile.crop(167, 101, 32, 32);
+        grass = sheetTile.crop(167, 134, 32, 32);
+        rock = sheetTile.crop(233, 101, 32, 32);
 
         walkDown1 = sheet.crop(WIDTH*0, HEIGHT*0, WIDTH, HEIGHT);
         walkDown2 = sheet.crop(WIDTH*1, HEIGHT*0, WIDTH, HEIGHT);
