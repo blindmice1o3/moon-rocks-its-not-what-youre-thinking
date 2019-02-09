@@ -1,5 +1,6 @@
 package com.pooh.moonrocks.states;
 
+import com.pooh.moonrocks.Game;
 import com.pooh.moonrocks.entities.creatures.Player;
 import com.pooh.moonrocks.gfx.Assets;
 
@@ -9,9 +10,10 @@ public class GameState extends State {
 
     private Player player;
 
-    public GameState() {
-        player = new Player(100, 100);
-    } // **** end GameState() constructor ****
+    public GameState(Game game) {
+        super(game);
+        player = new Player(game, 100, 100);
+    } // **** end GameState(Game) constructor ****
 
     @Override
     public void tick() {

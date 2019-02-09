@@ -4,6 +4,7 @@ import com.pooh.moonrocks.display.Display;
 import com.pooh.moonrocks.gfx.Assets;
 import com.pooh.moonrocks.gfx.ImageLoader;
 import com.pooh.moonrocks.gfx.SpriteSheet;
+import com.pooh.moonrocks.input.KeyManager;
 import com.pooh.moonrocks.states.*;
 
 import java.awt.*;
@@ -27,24 +28,32 @@ public class Game implements Runnable {
     private State menuState;
     private State settingState;
 
+    // Input
+    private KeyManager keyManager;
+
     public Game(String title, int width, int height) {
         this.width = width;
         this.height = height;
         this.title = title;
+        keyManager = new KeyManager();
     } // **** end Game(String, int, int) constructor ****
 
     private void init() {
         display = new Display(title, width, height);
+        display.getFrame().addKeyListener(keyManager);  // The JFrame composed in Display class will listen for keyboard input.
         Assets.init();
 
         // States
-        gameState = new GameState();
-        menuState = new MenuState();
-        settingState = new SettingState();
+        gameState = new GameState(this);
+        menuState = new MenuState(this);
+        settingState = new SettingState(this);
         StateManager.setCurrentState(gameState);
     } // **** end init() ****
 
     private void tick() {
+        // Update the KeyManager boolean variables for up, down, left, and right.
+        keyManager.tick();
+
         // If we have a currentState that already exists, call whichever currentState's tick() method.
         if (StateManager.getCurrentState() != null) {
             StateManager.getCurrentState().tick();
@@ -138,6 +147,10 @@ public class Game implements Runnable {
         stop();
 
     } // **** end run() ****
+
+    public KeyManager getKeyManager() {
+        return keyManager;
+    }
 
     public synchronized void start() {
         if (running) {

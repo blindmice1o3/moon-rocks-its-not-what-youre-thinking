@@ -31,6 +31,8 @@ public class Display {
         canvas.setPreferredSize( new Dimension(width, height) );
         canvas.setMaximumSize( new Dimension(width, height) );
         canvas.setMinimumSize( new Dimension(width, height) );
+        canvas.setFocusable(false); // Needed to do this so JFrame listens for keyboard input (JFrame is the sole
+                                    // component that'll be able to have focus).
 
         frame.add(canvas);
         frame.pack();
@@ -39,5 +41,9 @@ public class Display {
     public Canvas getCanvas() {
         return canvas;
     } // **** end getCanvas() ****
+
+    public JFrame getFrame() {
+        return frame;
+    } // **** end getFrame() ****
 
 } // **** end Display class ****
