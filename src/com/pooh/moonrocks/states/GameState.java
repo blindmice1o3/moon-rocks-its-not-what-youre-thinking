@@ -1,6 +1,7 @@
 package com.pooh.moonrocks.states;
 
 import com.pooh.moonrocks.Game;
+import com.pooh.moonrocks.Handler;
 import com.pooh.moonrocks.entities.creatures.Player;
 import com.pooh.moonrocks.gfx.Assets;
 import com.pooh.moonrocks.tiles.Tile;
@@ -13,11 +14,12 @@ public class GameState extends State {
     private Player player;
     private World world;
 
-    public GameState(Game game) {
-        super(game);
-        player = new Player(game, 100, 100);
-        world = new World(game, "resource/worlds/world1.txt");
-    } // **** end GameState(Game) constructor ****
+    public GameState(Handler handler) {
+        super(handler);
+        world = new World(handler, "resource/worlds/world1.txt");
+        handler.setWorld(world);    // IMPORTANT in ordering... now world in Handler class is no longer null.
+        player = new Player(handler, 100, 100);
+    } // **** end GameState(Handler) constructor ****
 
     @Override
     public void tick() {

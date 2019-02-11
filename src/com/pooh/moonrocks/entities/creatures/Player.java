@@ -1,15 +1,16 @@
 package com.pooh.moonrocks.entities.creatures;
 
 import com.pooh.moonrocks.Game;
+import com.pooh.moonrocks.Handler;
 import com.pooh.moonrocks.gfx.Assets;
 
 import java.awt.*;
 
 public class Player extends Creature {
 
-    public Player(Game game, float x, float y) {
-        super(game, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
-    } // **** end Player(Game, float, float) constructor ****
+    public Player(Handler handler, float x, float y) {
+        super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
+    } // **** end Player(Handler, float, float) constructor ****
 
     @Override
     public void tick() {
@@ -18,7 +19,7 @@ public class Player extends Creature {
         // Where we actually change the x and y coordinate of the Creature.
         move();
         // Whenever the player's tick() method is called, center camera on this player.
-        game.getGameCamera().centerOnEntity(this);
+        handler.getGameCamera().centerOnEntity(this);
     }
 
     // This SETS the xMove and yMove variable if there's a directional key press.
@@ -31,16 +32,16 @@ public class Player extends Creature {
 
         // Instead of directly affecting the x and y coordinates of our player, we're setting our xMove and yMove variables
         // equal to a certain speed (positive or negative, depending on the direction we should be moving along which axis).
-        if (game.getKeyManager().up) {
+        if (handler.getKeyManager().up) {
             yMove = -speed;
         }
-        if (game.getKeyManager().down) {
+        if (handler.getKeyManager().down) {
             yMove = speed;
         }
-        if (game.getKeyManager().left) {
+        if (handler.getKeyManager().left) {
             xMove = -speed;
         }
-        if (game.getKeyManager().right) {
+        if (handler.getKeyManager().right) {
             xMove = speed;
         }
     }
@@ -49,7 +50,7 @@ public class Player extends Creature {
     public void render(Graphics g) {
         // We were applying the GameCamera offsets to the World's tiles, but haven't to the player yet. Doing it here.
         // Similar to what we did the the World class's render().
-        g.drawImage(Assets.walkDown1, (int)(x - game.getGameCamera().getxOffset()), (int)(y - game.getGameCamera().getyOffset()),
+        g.drawImage(Assets.walkDown1, (int)(x - handler.getGameCamera().getxOffset()), (int)(y - handler.getGameCamera().getyOffset()),
                 width, height, null);
     }
 

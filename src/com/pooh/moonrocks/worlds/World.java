@@ -1,6 +1,6 @@
 package com.pooh.moonrocks.worlds;
 
-import com.pooh.moonrocks.Game;
+import com.pooh.moonrocks.Handler;
 import com.pooh.moonrocks.tiles.Tile;
 import com.pooh.moonrocks.utils.Utils;
 
@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class World {
 
-    private Game game;
+    private Handler handler;
     // In terms of Tile (i.e. if the size of the map/world is 5 x 5, it'll be 5 tiles across and 5 tiles down).
     private int width, height;
     private int spawnX, spawnY;
@@ -20,10 +20,10 @@ public class World {
     // constructor... 2 ways to create worlds... (1) randomly generated worlds... or (2) load in worlds from a file.
     // The second option will be the same world everytime, this is what we'll learn now. We'll need the location on our
     // computer of the file that we want to load, passed in as an argument to the constructor.
-    public World(Game game, String path) {
-        this.game = game;
+    public World(Handler handler, String path) {
+        this.handler = handler;
         loadWorld(path);
-    } // **** end World(Game, String) constructor ****
+    } // **** end World(Handler, String) constructor ****
 
     // loadWorld(String) method is responsible for getting the file that we want to load as our world and storing it in
     // the multi-dimensional array called tiles, so we'll know which tiles are in which position.
@@ -48,7 +48,7 @@ public class World {
         // Now we have to set the width and height of our world. (This is in terms of number of Tiles, NOT pixels.)
         width = Utils.parseInt( tokens[0] );    // The first number in our world1.txt file (aka first number in tokens).
         height = Utils.parseInt( tokens[1] );
-        // Next will be WHERE the player will SPAWN at the start of the game.
+        // Next will be WHERE the player will SPAWN at the start of the handler.
         spawnX = Utils.parseInt( tokens[2] );
         spawnY = Utils.parseInt( tokens[3] );   // We just read in the first four numbers of our file (world1.txt).
 
@@ -112,19 +112,19 @@ public class World {
         // Getting the xOffset of the GameCamera and divide by Tile's width to get it in terms of tiles and not pixels.
         // If we move left too far and the second argument's calculation returns a negative, Math.max() gives us 0.
         // Trying it without the Math.max() returning a lower bound of 0 (getting a neg number) == arrayindexoutofbound error.
-        int xStart = (int) Math.max(0, game.getGameCamera().getxOffset() / Tile.TILE_WIDTH);
+        int xStart = (int) Math.max(0, handler.getGameCamera().getxOffset() / Tile.TILE_WIDTH);
         // xEnd is trickier and uses Math.min()... the smaller of either width or some-calculation.
         // Adding the width because we're looking at far-right of our screen, not the far-left. Add 1 to include 1 more
         // tile to the far-right of the screen to get rid of the "weird effect"
-        int xEnd = (int) Math.min(width, (game.getGameCamera().getxOffset() + game.getWidth()) / Tile.TILE_WIDTH + 1);
+        int xEnd = (int) Math.min(width, (handler.getGameCamera().getxOffset() + handler.getWidth()) / Tile.TILE_WIDTH + 1);
         // Exact same process for the y-axis.
-        int yStart = (int) Math.max(0, game.getGameCamera().getyOffset() / Tile.TILE_HEIGHT);
-        int yEnd = (int) Math.min(height, (game.getGameCamera().getyOffset() + game.getHeight()) / Tile.TILE_HEIGHT + 1);
+        int yStart = (int) Math.max(0, handler.getGameCamera().getyOffset() / Tile.TILE_HEIGHT);
+        int yEnd = (int) Math.min(height, (handler.getGameCamera().getyOffset() + handler.getHeight()) / Tile.TILE_HEIGHT + 1);
 
         for (int y = yStart; y < yEnd; y++) {
             for (int x = xStart; x < xEnd; x++) {
-                getTile(x, y).render(g, (int) (x * Tile.TILE_WIDTH - game.getGameCamera().getxOffset()),
-                        (int) (y * Tile.TILE_HEIGHT - game.getGameCamera().getyOffset()));
+                getTile(x, y).render(g, (int) (x * Tile.TILE_WIDTH - handler.getGameCamera().getxOffset()),
+                        (int) (y * Tile.TILE_HEIGHT - handler.getGameCamera().getyOffset()));
             }
         }
 
@@ -152,8 +152,8 @@ public class World {
                     // GameCamera's offset variables are floats @@@ ).
                 // We're just substracting whatever the x and y offsets are from the position in which (to the screen)
                 // that we're rendering these tiles to.
-                getTile(x, y).render(g, (int)(x * Tile.TILE_WIDTH - game.getGameCamera().getxOffset()),
-                                        (int)(y * Tile.TILE_HEIGHT - game.getGameCamera().getyOffset()));
+                getTile(x, y).render(g, (int)(x * Tile.TILE_WIDTH - handler.getGameCamera().getxOffset()),
+                                        (int)(y * Tile.TILE_HEIGHT - handler.getGameCamera().getyOffset()));
             }
         }
         */
@@ -162,10 +162,10 @@ public class World {
     // To be used in the render(Graphics) method. Find the id of the Tile (stored in Tile class as a static variable)
     // using the indexes x and y of the multi-dimensional tiles array, and return that Tile.
     public Tile getTile(int x, int y) {
-        // Storing a Tile from the tiles array (which holds every single tile in our game) inside the Tile class (at
+        // Storing a Tile from the tiles array (which holds every single tile in our handler) inside the Tile class (at
         // so-and-so index). We're going to index it with whatever World's tiles array is at x and at y.
         Tile t = Tile.tiles[ tiles[x][y] ];     // (1) Tile.tiles[] is the array from Tile class that stores all the
-                                                // different types of tiles that exist in the game.
+                                                // different types of tiles that exist in the handler.
                                                 // (2) tiles[x][y] is the array from this (World) class that stores the
                                                 // id of the tile that's suppose to show up at position x and y.
 

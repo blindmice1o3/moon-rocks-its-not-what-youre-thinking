@@ -1,14 +1,15 @@
 package com.pooh.moonrocks.states;
 
 import com.pooh.moonrocks.Game;
+import com.pooh.moonrocks.Handler;
 
 import java.awt.*;
 
 public class MenuState extends State {
 
-    public MenuState(Game game) {
-        super(game);
-    } // **** end MenuState(Game) constructor ****
+    public MenuState(Handler handler) {
+        super(handler);
+    } // **** end MenuState(Handler) constructor ****
 
     @Override
     public void tick() {

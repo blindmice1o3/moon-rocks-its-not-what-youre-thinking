@@ -1,16 +1,17 @@
 package com.pooh.moonrocks.states;
 
 import com.pooh.moonrocks.Game;
+import com.pooh.moonrocks.Handler;
 
 import java.awt.*;
 
 public abstract class State {
 
-    protected Game game;
+    protected Handler handler;
 
-    public State(Game game) {
-        this.game = game;
-    } // **** end State(Game) constructor ****
+    public State(Handler handler) {
+        this.handler = handler;
+    } // **** end State(Handler) constructor ****
 
     public abstract void tick();
 

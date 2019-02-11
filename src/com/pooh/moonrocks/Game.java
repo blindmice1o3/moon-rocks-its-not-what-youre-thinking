@@ -35,6 +35,9 @@ public class Game implements Runnable {
     // Camera
     private GameCamera gameCamera;
 
+    // Handler
+    private Handler handler;
+
     public Game(String title, int width, int height) {
         this.width = width;
         this.height = height;
@@ -49,11 +52,12 @@ public class Game implements Runnable {
 
         // When game starts, the xOffset and yOffset are not shifted in any x or y direction (i.e. offsets are 0).
         gameCamera = new GameCamera(this, 0, 0);
+        handler = new Handler(this);
 
         // States
-        gameState = new GameState(this);
-        menuState = new MenuState(this);
-        settingState = new SettingState(this);
+        gameState = new GameState(handler);
+        menuState = new MenuState(handler);
+        settingState = new SettingState(handler);
         StateManager.setCurrentState(gameState);
     } // **** end init() ****
 
