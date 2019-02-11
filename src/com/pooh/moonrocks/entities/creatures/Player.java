@@ -10,6 +10,14 @@ public class Player extends Creature {
 
     public Player(Handler handler, float x, float y) {
         super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
+
+        // Entity had default bounding-box for collision detection, here it's more specific.
+        // @@@ THESE VALUES WILL BE CUSTOMIZED TO FIT THE PLAYER OR CREATURE THAT we HAVE. @@@
+            // We can't see this bounding box (collision detection) visually, so we'll do testing code in render().
+        bounds.x = 16;
+        bounds.y = 32;
+        bounds.width = 32;
+        bounds.height = 32;
     } // **** end Player(Handler, float, float) constructor ****
 
     @Override
@@ -52,6 +60,18 @@ public class Player extends Creature {
         // Similar to what we did the the World class's render().
         g.drawImage(Assets.walkDown1, (int)(x - handler.getGameCamera().getxOffset()), (int)(y - handler.getGameCamera().getyOffset()),
                 width, height, null);
+
+        // @@@ For TESTING PURPOSES we'll draw the visual of the bounding box (collision detection). @@@
+        // Keep in mind that the bounds.x and bound.y is the starting point of pixels-shifted-into-the-image's x and y...
+        // that's why there's the "x + " or "y + " in front of those arguments.
+        g.setColor(Color.RED);
+        g.fillRect( (int)( x + bounds.x - handler.getGameCamera().getxOffset() ),
+                    (int)( y + bounds.y - handler.getGameCamera().getyOffset() ),
+                    bounds.width, bounds.height);
+        // If we comment out the 4 bounds values in the Player's constructor, we'll see the default of the bounding box
+        // is the full image of the player (i.e. the red filled rectangle covers the player's entire image).
+
+        // !!! See Creature class for getting COLLISION DETECTION working !!!
     }
 
 } // **** end Player class ****

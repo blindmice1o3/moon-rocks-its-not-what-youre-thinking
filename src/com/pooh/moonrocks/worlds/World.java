@@ -70,7 +70,7 @@ public class World {
                     // for-loop into the 1-dimensional array index. BUT ALSO HAVE TO ADD 4 because we are setting the
                     // first 4 elements in the world1.txt file (array indexes [0], [1], [2], [3]) into variables width,
                     // height, spawnX, spawnY... they're not actual world data!!!! @@@@
-                tiles[x][y] = Utils.parseInt( tokens[ (x + y * width) + 4] );
+                tiles[x][y] = Utils.parseInt( tokens[ (x + (y * width)) + 4] );
             }
         }
 
@@ -162,6 +162,11 @@ public class World {
     // To be used in the render(Graphics) method. Find the id of the Tile (stored in Tile class as a static variable)
     // using the indexes x and y of the multi-dimensional tiles array, and return that Tile.
     public Tile getTile(int x, int y) {
+        // Check to make sure the player is not outside the map, if player is outside, return dirt tile to prevent crash.
+        if (x < 0 || y < 0 || x >= width || y >= height) {
+            return Tile.dirtTile;
+        }
+
         // Storing a Tile from the tiles array (which holds every single tile in our handler) inside the Tile class (at
         // so-and-so index). We're going to index it with whatever World's tiles array is at x and at y.
         Tile t = Tile.tiles[ tiles[x][y] ];     // (1) Tile.tiles[] is the array from Tile class that stores all the

@@ -30,8 +30,38 @@ public abstract class Creature extends Entity {
     public void move() {
         // xMove and yMove are controlled by subclass (Player) when getInput() is called. xMove and yMove are 0 when NO
         // KEYS are pressed (i.e. when up, down, left, and right variables are all false... indication not pressed).
-        x += xMove;
+
+        moveX();
+        moveY();
+
+
+        // The following was a previous version. It's now being taken care of by the 2 new methods moveX() and moveY().
+        //x += xMove;
+        //y += yMove;
+    }
+
+    // !!! 2 new methods to get COLLISION DETECTION working !!!
+    public void moveX() {
+        //x += xMove;   //was moved into this method from move() method... but now commented out for an if-else statement.
+
+        // This will help us determine WHICH CORNERS WE NEED TO CHECK for a collision detection.
+        if (xMove > 0) {    // If the amount we should move by is positive, we are MOVING RIGHT.
+
+        } else if (xMove < 0) { // If xMove is a negative number, that means we are MOVING LEFT.
+
+        }
+
+    }
+
+    public void moveY() {
         y += yMove;
+    }
+
+    // HELPER METHOD TO MAKE collision detection EASIER
+    protected boolean collisionWithTile(int x, int y) {
+        // This method takes in some-tile-x and some-tile-y coordinates and if it's solid return true if not return false.
+        // (i.e. calling the isSolid() method of whatever tile we are specifying by x and y.
+        return handler.getWorld().getTile(x, y).isSolid();
     }
 
     // GETTERS and SETTERS
