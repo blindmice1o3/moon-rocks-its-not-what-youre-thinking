@@ -18,7 +18,7 @@ public class GameState extends State {
         super(game);
         player = new Player(game, 100, 100);
         // Testing the World class
-        world = new World("");
+        world = new World("resource/worlds/world1.txt");
     } // **** end GameState(Game) constructor ****
 
     @Override

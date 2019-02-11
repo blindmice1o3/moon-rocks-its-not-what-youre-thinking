@@ -1,6 +1,7 @@
 package com.pooh.moonrocks.worlds;
 
 import com.pooh.moonrocks.tiles.Tile;
+import com.pooh.moonrocks.utils.Utils;
 
 import java.awt.*;
 
@@ -8,6 +9,7 @@ public class World {
 
     // In terms of Tile (i.e. if the size of the map/world is 5 x 5, it'll be 5 tiles across and 5 tiles down).
     private int width, height;
+    private int spawnX, spawnY;
     // We also need a way to store all of the tiles in every single position. Multi-dimensional array. We'll store it
     // using int (for each type of tile's id), not actual Tile object. Multi-dimensional as in we'll have 2 indexes for
     // the array. The rows will be called x, and the columns/height will be called y.
@@ -23,8 +25,56 @@ public class World {
     // loadWorld(String) method is responsible for getting the file that we want to load as our world and storing it in
     // the multi-dimensional array called tiles, so we'll know which tiles are in which position.
     private void loadWorld(String path) {
-        // @@@ Will code this method in the next tutorial (video18) @@@
+        // Using Utils class's loadFileAsString(String) method to store (in String called file) the location (on our
+        // computer) of the world1.txt file.
+        String file = Utils.loadFileAsString(path);
 
+        // In our world1.txt file, we had split everything up either by a space or a newline.
+        // What we want to do is convert all the Strings within our world1.txt into actual numbers (integers).
+        // We have to split up the String that we loaded from world1.txt... we have to split up every individual number.
+
+        // We'll take a String[] array (an array of every single number inside of world1.txt) called tokens
+        // and call split on our String representation of the loaded world1.txt file (the String variable called file).
+
+        // @@@@ To split it on any amount of white space (so a space character or a newline character) "\\s+" @@@@
+        String[] tokens = file.split("\\s+");
+
+        // What we just did was we took our file and we splitted each number into its own little String and stored each
+        // of them into an index in the tokens array. That way we can access all of them separately.
+
+        // Now we have to set the width and height of our world. (This is in terms of number of Tiles, NOT pixels.)
+        width = Utils.parseInt( tokens[0] );    // The first number in our world1.txt file (aka first number in tokens).
+        height = Utils.parseInt( tokens[1] );
+        // Next will be WHERE the player will SPAWN at the start of the game.
+        spawnX = Utils.parseInt( tokens[2] );
+        spawnY = Utils.parseInt( tokens[3] );   // We just read in the first four numbers of our file (world1.txt).
+
+
+        // Now every single number after this is actual world data (id numbers of Tiles).
+        // We have to read all that data into the World class's int[][] tiles array.
+
+        // Initialize the multi-dimensional int array called tiles by the world's width and height (number of Tiles).
+        tiles = new int[width][height];
+        // Use nested for-loops (just like in the render() method) to store the int id into the tiles array.
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                // Here's where it gets a bit tricky. First, it has to be an integer, so use the Utils class's parseInt().
+
+                // Parsing something from the tokens array into an int, but the tokens is a 1-D array while tiles is 2-D.
+                // We have to convert the x and y for-loop position into whatever proper position it is into the proper
+                // position of our tokens array.
+                    // @@@@ In parentheses... (x + y * width) and that will appropriately convert the x and y of the
+                    // for-loop into the 1-dimensional array index. BUT ALSO HAVE TO ADD 4 because we are setting the
+                    // first 4 elements in the world1.txt file (array indexes [0], [1], [2], [3]) into variables width,
+                    // height, spawnX, spawnY... they're not actual world data!!!! @@@@
+                tiles[x][y] = Utils.parseInt( tokens[ (x + y * width) + 4] );
+            }
+        }
+
+
+
+        /*    ****************************************************************************
+        // @@@ Will code this method in the next (video18) tutorial @@@
 
         // The following is temporary just so we have something to work with (loading the width, height, and tiles array).
                         // @@@ FOR TESTING PURPOSES @@@
@@ -37,6 +87,8 @@ public class World {
                 tiles[x][y] = 0;    // temporarily setting all of the tile as GrassTile (whose id is 0)
             }
         }
+
+        ***********************************************************************************    */
     }
 
     // To update the position of all the tiles and things like that.
