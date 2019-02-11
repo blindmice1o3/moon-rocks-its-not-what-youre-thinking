@@ -101,26 +101,52 @@ public class World {
 
     // To draw all the tiles to the screen, that way we can see the world.
     // Similar to what we did to temporarily load the world... using nested for-loops to loop through every tile.
-    public void render(Graphics g) {
-        // CodeNMore is starting with y first... it's suppose to prevent a few problems down the road.
 
-        // How can we render a Tile when all we have is a bunch of int? We need another method that'll return a Tile.
+    // NOT efficient, redrawing ALL the tiles every time. Using 4 new variables so we limit what gets redrawn (what the
+    // user actually sees. It's pretty easy, but requires quite a bit of math.
+    public void render(Graphics g) {
+        //3rd version
+            // Want to prevent going into NEGATIVE numbers...
+            // Using Math.max(int, int) which returns the greater of the 2 numbers (but we have to cast to int since
+            // the GameCamera's offset uses a float).
+        // Getting the xOffset of the GameCamera and divide by Tile's width to get it in terms of tiles and not pixels.
+        // If we move left too far and the second argument's calculation returns a negative, Math.max() gives us 0.
+        // Trying it without the Math.max() returning a lower bound of 0 (getting a neg number) == arrayindexoutofbound error.
+        int xStart = (int) Math.max(0, game.getGameCamera().getxOffset() / Tile.TILE_WIDTH);
+        // xEnd is trickier and uses Math.min()... the smaller of either width or some-calculation.
+        // Adding the width because we're looking at far-right of our screen, not the far-left. Add 1 to include 1 more
+        // tile to the far-right of the screen to get rid of the "weird effect"
+        int xEnd = (int) Math.min(width, (game.getGameCamera().getxOffset() + game.getWidth()) / Tile.TILE_WIDTH + 1);
+        // Exact same process for the y-axis.
+        int yStart = (int) Math.max(0, game.getGameCamera().getyOffset() / Tile.TILE_HEIGHT);
+        int yEnd = (int) Math.min(height, (game.getGameCamera().getyOffset() + game.getHeight()) / Tile.TILE_HEIGHT + 1);
+
+        for (int y = yStart; y < yEnd; y++) {
+            for (int x = xStart; x < xEnd; x++) {
+                getTile(x, y).render(g, (int) (x * Tile.TILE_WIDTH - game.getGameCamera().getxOffset()),
+                        (int) (y * Tile.TILE_HEIGHT - game.getGameCamera().getyOffset()));
+            }
+        }
+
+        /*      @@@ 1st and 2nd version where we redraw the entire World every time. @@@
+        // CodeNMore is starting with y first... it's suppose to prevent a few problems down the road.
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                // We're calling the Tile's render() method, after we get a tile from the getTile() method.
 
-                /* getTile(x, y).render(g, x, y); */
+                //1st version
+                //getTile(x, y).render(g, x, y);
 
-                    // @@@@@@@@ Something went wrong @@@@@@@
-                    // Since we render in terms of pixels, and our tiles are 64x64 pixels in size, all of the tiles were
-                    // just drawn ontop of one another because the tiles[][] uses tile coordinates (5x5) - not pixels.
+                // @@@@@@@@ Something went wrong @@@@@@@
+                // Since we render in terms of pixels, and our tiles are 64x64 pixels in size, all of the tiles were
+                // just drawn ontop of one another because the tiles[][] uses tile coordinates (5x5) - not pixels.
 
-                    // So we have to convert World's render(Graphics) method's usage of
-                    // Tile class's render(Graphics, int, int) method
-                    // (specifically the x and y we pass for the int, int)...
-                    // we have to convert these coordinates from tiles into pixels.
-
+                // So we have to convert World's render(Graphics) method's usage of
+                // Tile class's render(Graphics, int, int) method
+                // (specifically the x and y we pass for the int, int)...
+                // we have to convert these coordinates from tiles into pixels.
                 // All we have to do is multiple the x coordinate by the Tile.TILE_WIDTH, and the same for y.
+
+                    //2nd version
                     // Applying GameCamera's offsets variables when we draw each individual tile to the screen by
                     // subtracting the x and y offset values ( @@@ have to cast both arguments to an int now since
                     // GameCamera's offset variables are floats @@@ ).
@@ -130,6 +156,7 @@ public class World {
                                         (int)(y * Tile.TILE_HEIGHT - game.getGameCamera().getyOffset()));
             }
         }
+        */
     }
 
     // To be used in the render(Graphics) method. Find the id of the Tile (stored in Tile class as a static variable)
