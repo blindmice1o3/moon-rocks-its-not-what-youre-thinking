@@ -1,5 +1,6 @@
 package com.pooh.moonrocks.entities.creatures;
 
+import com.pooh.moonrocks.Game;
 import com.pooh.moonrocks.entities.Entity;
 
 import java.awt.*;
@@ -15,13 +16,13 @@ public abstract class Creature extends Entity {
     protected float speed;
     protected float xMove, yMove;
 
-    public Creature(float x, float y, int width, int height) {
-        super(x, y, width, height);
+    public Creature(Game game, float x, float y, int width, int height) {
+        super(game, x, y, width, height);
         health = DEFAULT_HEALTH;
         speed = DEFAULT_SPEED;
         xMove = 0;
         yMove = 0;
-    } // **** end Creature(float, float, int, int) constructor ****
+    } // **** end Creature(Game, float, float, int, int) constructor ****
 
     // This MOVES (i.e. actually changes) the x and y coordinates of the Creature. Used with subclass's getInput(), which
     // SETS the xMove and yMove variables (if no directional keys are pressed, xMove and yMove are set to 0).

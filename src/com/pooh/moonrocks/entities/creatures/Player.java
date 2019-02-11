@@ -7,11 +7,8 @@ import java.awt.*;
 
 public class Player extends Creature {
 
-    private Game game;
-
     public Player(Game game, float x, float y) {
-        super(x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
-        this.game = game;
+        super(game, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
     } // **** end Player(Game, float, float) constructor ****
 
     @Override
@@ -20,6 +17,8 @@ public class Player extends Creature {
         getInput();
         // Where we actually change the x and y coordinate of the Creature.
         move();
+        // Whenever the player's tick() method is called, center camera on this player.
+        game.getGameCamera().centerOnEntity(this);
     }
 
     // This SETS the xMove and yMove variable if there's a directional key press.
@@ -48,7 +47,10 @@ public class Player extends Creature {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.walkDown1, (int)x, (int)y, width, height, null);
+        // We were applying the GameCamera offsets to the World's tiles, but haven't to the player yet. Doing it here.
+        // Similar to what we did the the World class's render().
+        g.drawImage(Assets.walkDown1, (int)(x - game.getGameCamera().getxOffset()), (int)(y - game.getGameCamera().getyOffset()),
+                width, height, null);
     }
 
 } // **** end Player class ****

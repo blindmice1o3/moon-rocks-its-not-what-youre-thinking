@@ -2,6 +2,7 @@ package com.pooh.moonrocks;
 
 import com.pooh.moonrocks.display.Display;
 import com.pooh.moonrocks.gfx.Assets;
+import com.pooh.moonrocks.gfx.GameCamera;
 import com.pooh.moonrocks.gfx.ImageLoader;
 import com.pooh.moonrocks.gfx.SpriteSheet;
 import com.pooh.moonrocks.input.KeyManager;
@@ -14,7 +15,7 @@ import java.awt.image.BufferedImage;
 public class Game implements Runnable {
 
     private Display display;
-    public int width, height;
+    private int width, height;
     public String title;
 
     private boolean running = false;
@@ -31,6 +32,9 @@ public class Game implements Runnable {
     // Input
     private KeyManager keyManager;
 
+    // Camera
+    private GameCamera gameCamera;
+
     public Game(String title, int width, int height) {
         this.width = width;
         this.height = height;
@@ -42,6 +46,9 @@ public class Game implements Runnable {
         display = new Display(title, width, height);
         display.getFrame().addKeyListener(keyManager);  // The JFrame composed in Display class will listen for keyboard input.
         Assets.init();
+
+        // When game starts, the xOffset and yOffset are not shifted in any x or y direction (i.e. offsets are 0).
+        gameCamera = new GameCamera(this, 0, 0);
 
         // States
         gameState = new GameState(this);
@@ -150,6 +157,18 @@ public class Game implements Runnable {
 
     public KeyManager getKeyManager() {
         return keyManager;
+    }
+
+    public GameCamera getGameCamera() {
+        return gameCamera;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public synchronized void start() {

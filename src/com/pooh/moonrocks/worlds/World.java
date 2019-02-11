@@ -1,5 +1,6 @@
 package com.pooh.moonrocks.worlds;
 
+import com.pooh.moonrocks.Game;
 import com.pooh.moonrocks.tiles.Tile;
 import com.pooh.moonrocks.utils.Utils;
 
@@ -7,6 +8,7 @@ import java.awt.*;
 
 public class World {
 
+    private Game game;
     // In terms of Tile (i.e. if the size of the map/world is 5 x 5, it'll be 5 tiles across and 5 tiles down).
     private int width, height;
     private int spawnX, spawnY;
@@ -18,9 +20,10 @@ public class World {
     // constructor... 2 ways to create worlds... (1) randomly generated worlds... or (2) load in worlds from a file.
     // The second option will be the same world everytime, this is what we'll learn now. We'll need the location on our
     // computer of the file that we want to load, passed in as an argument to the constructor.
-    public World(String path) {
+    public World(Game game, String path) {
+        this.game = game;
         loadWorld(path);
-    } // **** end World(String) constructor ****
+    } // **** end World(Game, String) constructor ****
 
     // loadWorld(String) method is responsible for getting the file that we want to load as our world and storing it in
     // the multi-dimensional array called tiles, so we'll know which tiles are in which position.
@@ -118,7 +121,13 @@ public class World {
                     // we have to convert these coordinates from tiles into pixels.
 
                 // All we have to do is multiple the x coordinate by the Tile.TILE_WIDTH, and the same for y.
-                getTile(x, y).render(g, x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
+                    // Applying GameCamera's offsets variables when we draw each individual tile to the screen by
+                    // subtracting the x and y offset values ( @@@ have to cast both arguments to an int now since
+                    // GameCamera's offset variables are floats @@@ ).
+                // We're just substracting whatever the x and y offsets are from the position in which (to the screen)
+                // that we're rendering these tiles to.
+                getTile(x, y).render(g, (int)(x * Tile.TILE_WIDTH - game.getGameCamera().getxOffset()),
+                                        (int)(y * Tile.TILE_HEIGHT - game.getGameCamera().getyOffset()));
             }
         }
     }
