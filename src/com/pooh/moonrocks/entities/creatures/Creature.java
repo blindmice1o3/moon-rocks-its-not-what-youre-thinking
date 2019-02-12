@@ -57,9 +57,20 @@ public abstract class Creature extends Entity {
 
             // Here's the collision stuff. IF THE TILE WE'RE TRYING TO MOVE INTO is not SOLID then we're good to move.
             // The y parameter could be 1 of 2 thing (upper or lower right) (also need in terms of tile).
+                        // If there's no collision in the upcoming tile, move the player.
             if ( !collisionWithTile(tx, (int)(y + bounds.y) / Tile.TILE_HEIGHT) &&                      //upper-right
                     !collisionWithTile(tx, (int)(y + bounds.y + bounds.height) / Tile.TILE_HEIGHT) ) {  //lower-right
                 x += xMove;
+            } else {    // Else there will be a collision. @@@ video23: Perfect Collision @@@ moving right
+                // We going to COMPLETELY RESET the x position of the player (in a way that the bounding box is lined
+                // directly up with the tile we tried to move into. That way (no matter what), we'll be standing right
+                // next to the tile if there was a collision.
+                    // Set the Creature's x-coordinate to the temporary x variable (tx) times Tile.TILE_WIDTH to convert
+                    // it into pixel coordinate.
+                        // We have to ALIGN the edge of the BOUNDING BOX with the tile (instead of the edge of the image).
+                        // All we'll have to do is substract the x-coordinate AND width of our boundary.
+                    // This leaves a glitch where we can't move vertical in this state, but fix by minusing 1 pixel.
+                x = tx * Tile.TILE_WIDTH - bounds.x - bounds.width - 1;
             }
         } else if (xMove < 0) { // If xMove is a negative number, that means we are @@@@@@@ MOVING LEFT @@@@@@@.
             // tx means temporary x (x coordinate of the tile we're trying to move into).
@@ -70,6 +81,10 @@ public abstract class Creature extends Entity {
             if ( !collisionWithTile(tx, (int)(y + bounds.y) / Tile.TILE_HEIGHT) &&                      //upper-left
                     !collisionWithTile(tx, (int)(y + bounds.y + bounds.height) / Tile.TILE_HEIGHT) ) {  //lower-left
                 x += xMove;
+            } else {    // Else there will be a collision. @@@ video23: Perfect Collision @@@ moving left
+                // Convert to pixel coordinate. Add the width of one tile to move player out of the isSolid() tile then
+                // subtract the x-portion of bounding box. This aligns the player's bounding box's left edge to the tile.
+                x = tx * Tile.TILE_WIDTH + Tile.TILE_WIDTH - bounds.x;
             }
         }
 
@@ -83,6 +98,9 @@ public abstract class Creature extends Entity {
             if ( !collisionWithTile((int)(x + bounds.x) / Tile.TILE_WIDTH, ty) &&                       //upper-left
                     !collisionWithTile((int)(x + bounds.x + bounds.width) / Tile.TILE_WIDTH, ty) ) {    //upper-right
                 y += yMove;
+            } else {    // Else there will be a collision. @@@ video23: Perfect Collision @@@ moving up
+                // Convert to pixel coordinate. Add Tile.TILE_HEIGHT to get us beside it and subtract bounds.y.
+                y = ty * Tile.TILE_HEIGHT + Tile.TILE_HEIGHT - bounds.y;
             }
         } else if (yMove > 0) { // If yMove is positive, we're actually moving @@@@@@@ DOWN @@@@@@@ the screen.
             // ty means temporary y (y coordinate of the tile we're trying to move into).
@@ -91,6 +109,10 @@ public abstract class Creature extends Entity {
             if ( !collisionWithTile((int)(x + bounds.x) / Tile.TILE_WIDTH, ty) &&                       //lower-left
                     !collisionWithTile((int)(x + bounds.x + bounds.width) / Tile.TILE_WIDTH, ty) ) {    //lower-right
                 y += yMove;
+            } else {    // Else there will be a collision. @@@ video23: Perfect Collision @@@ moving down
+                // Convert to pixel coordinate. Subtract out the bounds y offset and bounds height.
+                // This leaves a glitch if we try to move horizontally from this position, but fix by minusing 1 pixel.
+                y = ty * Tile.TILE_HEIGHT - bounds.y - bounds.height - 1;
             }
         }
     }
