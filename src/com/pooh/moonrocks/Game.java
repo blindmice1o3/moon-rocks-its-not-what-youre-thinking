@@ -51,8 +51,8 @@ public class Game implements Runnable {
         Assets.init();
 
         // When game starts, the xOffset and yOffset are not shifted in any x or y direction (i.e. offsets are 0).
-        gameCamera = new GameCamera(this, 0, 0);
         handler = new Handler(this);
+        gameCamera = new GameCamera(handler, 0, 0);
 
         // States
         gameState = new GameState(handler);

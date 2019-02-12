@@ -183,4 +183,12 @@ public class World {
         return t;
     }
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
 } // **** end World class ****
