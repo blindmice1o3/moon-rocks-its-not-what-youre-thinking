@@ -3,6 +3,7 @@ package com.pooh.moonrocks.entities.creatures;
 import com.pooh.moonrocks.Game;
 import com.pooh.moonrocks.Handler;
 import com.pooh.moonrocks.entities.Entity;
+import com.pooh.moonrocks.tiles.Tile;
 
 import java.awt.*;
 
@@ -41,20 +42,57 @@ public abstract class Creature extends Entity {
     }
 
     // !!! 2 new methods to get COLLISION DETECTION working !!!
-    public void moveX() {
-        //x += xMove;   //was moved into this method from move() method... but now commented out for an if-else statement.
+    public void moveX() {   // Check for collision (solid tiles) when moving horizontally.
+        // tx = our x position plus xMove (where we're trying to moving to), then we have to get to the very edge of our
+        // bounding box (which means we have to add the bounds.x coordinate [the offset of the image]), and because
+        // we're moving right we need to check the two upper and lower right corners of our bounding box (which
+        // means we have to add bound.width to it).
+        // There are many ways to do this, including using for-loops and more math, but this is what's best to learn at first.
+        // This gets us position in pixels, but we want it in terms of tiles (so divide by Tile.TILE_WIDTH).
+        // This gets us the x coordinate of the tile we're trying to move into.
 
-        // This will help us determine WHICH CORNERS WE NEED TO CHECK for a collision detection.
-        if (xMove > 0) {    // If the amount we should move by is positive, we are MOVING RIGHT.
+        if (xMove > 0) {    // If the amount we should move by is positive, we are @@@@@@@ MOVING RIGHT @@@@@@@.
+            // tx means temporary x (x coordinate of the tile we're trying to move into).
+            int tx = (int)(x + xMove + bounds.x + bounds.width) / Tile.TILE_WIDTH;
 
-        } else if (xMove < 0) { // If xMove is a negative number, that means we are MOVING LEFT.
+            // Here's the collision stuff. IF THE TILE WE'RE TRYING TO MOVE INTO is not SOLID then we're good to move.
+            // The y parameter could be 1 of 2 thing (upper or lower right) (also need in terms of tile).
+            if ( !collisionWithTile(tx, (int)(y + bounds.y) / Tile.TILE_HEIGHT) &&                      //upper-right
+                    !collisionWithTile(tx, (int)(y + bounds.y + bounds.height) / Tile.TILE_HEIGHT) ) {  //lower-right
+                x += xMove;
+            }
+        } else if (xMove < 0) { // If xMove is a negative number, that means we are @@@@@@@ MOVING LEFT @@@@@@@.
+            // tx means temporary x (x coordinate of the tile we're trying to move into).
+            int tx = (int)(x + xMove + bounds.x) / Tile.TILE_WIDTH;     // Moving left doesn't need bound.width.
 
+            // Here's the collision stuff. IF THE TILE WE'RE TRYING TO MOVE INTO is not SOLID then we're good to move.
+            // The y parameter could be 1 of 2 thing (upper or lower left) (also need in terms of tile).
+            if ( !collisionWithTile(tx, (int)(y + bounds.y) / Tile.TILE_HEIGHT) &&                      //upper-left
+                    !collisionWithTile(tx, (int)(y + bounds.y + bounds.height) / Tile.TILE_HEIGHT) ) {  //lower-left
+                x += xMove;
+            }
         }
 
     }
 
-    public void moveY() {
-        y += yMove;
+    public void moveY() {   // Check for collision (solid tiles) when moving vertically.
+        if (yMove < 0) { // If yMove is negative, we're actually moving @@@@@@@ UP @@@@@@@ the screen.
+            // ty means temporary y (y coordinate of the tile we're trying to move into).
+            int ty = (int)(y + yMove + bounds.y) / Tile.TILE_HEIGHT; // Top portion of bounding box.
+
+            if ( !collisionWithTile((int)(x + bounds.x) / Tile.TILE_WIDTH, ty) &&                       //upper-left
+                    !collisionWithTile((int)(x + bounds.x + bounds.width) / Tile.TILE_WIDTH, ty) ) {    //upper-right
+                y += yMove;
+            }
+        } else if (yMove > 0) { // If yMove is positive, we're actually moving @@@@@@@ DOWN @@@@@@@ the screen.
+            // ty means temporary y (y coordinate of the tile we're trying to move into).
+            int ty = (int)(y + yMove + bounds.y + bounds.height) / Tile.TILE_HEIGHT; // Lower portion of bounding box.
+
+            if ( !collisionWithTile((int)(x + bounds.x) / Tile.TILE_WIDTH, ty) &&                       //lower-left
+                    !collisionWithTile((int)(x + bounds.x + bounds.width) / Tile.TILE_WIDTH, ty) ) {    //lower-right
+                y += yMove;
+            }
+        }
     }
 
     // HELPER METHOD TO MAKE collision detection EASIER
