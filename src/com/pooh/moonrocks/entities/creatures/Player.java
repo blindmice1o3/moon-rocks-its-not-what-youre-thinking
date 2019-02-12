@@ -2,11 +2,16 @@ package com.pooh.moonrocks.entities.creatures;
 
 import com.pooh.moonrocks.Game;
 import com.pooh.moonrocks.Handler;
+import com.pooh.moonrocks.gfx.Animation;
 import com.pooh.moonrocks.gfx.Assets;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Player extends Creature {
+
+    // ANIMATIONS
+    private Animation animationDown, animationUp, animationLeft, animationRight;
 
     public Player(Handler handler, float x, float y) {
         super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
@@ -18,10 +23,23 @@ public class Player extends Creature {
         bounds.y = 12;
         bounds.width = 32;
         bounds.height = 48;
+
+        // ANIMATIONS
+        animationDown = new Animation(500, Assets.player_down); // every half a second, array of BufferedImage
+        animationUp = new Animation(500, Assets.player_up);
+        animationLeft = new Animation(500, Assets.player_left);
+        animationRight = new Animation(500, Assets.player_right);
     } // **** end Player(Handler, float, float) constructor ****
 
     @Override
     public void tick() {
+        // ANIMATIONS
+        animationDown.tick();
+        animationUp.tick();
+        animationLeft.tick();
+        animationRight.tick();
+
+        // MOVEMENT
         // Check for whether up, down, left, or right are pressed.
         getInput();
         // Where we actually change the x and y coordinate of the Creature.
@@ -58,7 +76,9 @@ public class Player extends Creature {
     public void render(Graphics g) {
         // We were applying the GameCamera offsets to the World's tiles, but haven't to the player yet. Doing it here.
         // Similar to what we did the the World class's render().
-        g.drawImage(Assets.walkDown1, (int)(x - handler.getGameCamera().getxOffset()), (int)(y - handler.getGameCamera().getyOffset()),
+            // ANIMATIONS: the image passed in is from an array of BufferedImage whose index is incremented by tick() calls.
+            // Initially it was (hard-coded) as the animationDown.getCurrentFrame()... so player ALWAYS shown as walking-down.
+        g.drawImage(getCurrentAnimationFrame(), (int)(x - handler.getGameCamera().getxOffset()), (int)(y - handler.getGameCamera().getyOffset()),
                 width, height, null);
 
         // @@@ For TESTING PURPOSES we'll draw the visual of the bounding box (collision detection). @@@
@@ -72,6 +92,20 @@ public class Player extends Creature {
         // is the full image of the player (i.e. the red filled rectangle covers the player's entire image).
 
         // !!! See Creature class for getting COLLISION DETECTION working !!!
+    }
+
+    // Our ANIMATIONS didn't change when we're moving right, left, and up... it's always the down animation. New method.
+    private BufferedImage getCurrentAnimationFrame() {
+        // @@@@ Left and right will override up and down. @@@@ Check x-axis first.
+        if (xMove < 0) {        // We are moving LEFT.
+            return animationLeft.getCurrentFrame();
+        } else if (xMove > 0) { // We are moving RIGHT.
+            return animationRight.getCurrentFrame();
+        } else if (yMove < 0) { // We are moving UP. // Checking y-axis now.
+            return animationUp.getCurrentFrame();
+        } else {                // We are moving DOWN. // Our default.
+            return animationDown.getCurrentFrame();
+        }                       // We could use a standing still image as default, then would just add another if-else for DOWN.
     }
 
 } // **** end Player class ****
