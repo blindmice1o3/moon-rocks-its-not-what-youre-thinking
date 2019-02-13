@@ -1,24 +1,20 @@
 package com.pooh.moonrocks.states;
 
-import com.pooh.moonrocks.Game;
 import com.pooh.moonrocks.Handler;
 import com.pooh.moonrocks.entities.creatures.Player;
-import com.pooh.moonrocks.gfx.Assets;
-import com.pooh.moonrocks.tiles.Tile;
+import com.pooh.moonrocks.entities.statics.CactusTree;
 import com.pooh.moonrocks.worlds.World;
 
 import java.awt.*;
 
 public class GameState extends State {
 
-    private Player player;
     private World world;
 
     public GameState(Handler handler) {
         super(handler);
         world = new World(handler, "resource/worlds/world1.txt");
         handler.setWorld(world);    // IMPORTANT in ordering... now world in Handler class is no longer null.
-        player = new Player(handler, 100, 100);
     } // **** end GameState(Handler) constructor ****
 
     @Override
@@ -26,7 +22,6 @@ public class GameState extends State {
         // Before we tick() the player, we want to tick() the world first, that way all the world moving stuff happens
         // first.
         world.tick();
-        player.tick();
 
         // Moving the GameCamera by 1 and 1 on both axis (so add 1 to the x and y offsets) for every tick.
         // This will give us the illusion of our camera moving.
@@ -44,7 +39,6 @@ public class GameState extends State {
         // Before we render the player, we want to render the world first, that way all the player will be drawn on top
         // of the world (and not behind/under it).
         world.render(g);
-        player.render(g);
     }
 
 } // **** end GameState class ****

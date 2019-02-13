@@ -6,7 +6,7 @@ public class Assets {
 
     private static final int WIDTH = 16, HEIGHT = 16;
 
-    public static BufferedImage dirt, grass, rock;
+    public static BufferedImage dirt, grass, rock, cactusTree;
     public static BufferedImage[] player_down, player_up, player_left, player_right,
                             player_sail_down, player_sail_up, player_sail_left, player_sail_right;
 
@@ -17,6 +17,7 @@ public class Assets {
         dirt = sheetTile.crop(167, 101, 32, 32);
         grass = sheetTile.crop(167, 134, 32, 32);
         rock = sheetTile.crop(233, 101, 32, 32);
+        cactusTree = sheetTile.crop(204, 105, 24, 22);
 
         player_down = new BufferedImage[2];
         player_left = new BufferedImage[2];

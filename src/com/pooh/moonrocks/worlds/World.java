@@ -1,6 +1,9 @@
 package com.pooh.moonrocks.worlds;
 
 import com.pooh.moonrocks.Handler;
+import com.pooh.moonrocks.entities.EntityManager;
+import com.pooh.moonrocks.entities.creatures.Player;
+import com.pooh.moonrocks.entities.statics.CactusTree;
 import com.pooh.moonrocks.tiles.Tile;
 import com.pooh.moonrocks.utils.Utils;
 
@@ -17,12 +20,26 @@ public class World {
     // the array. The rows will be called x, and the columns/height will be called y.
     private int[][] tiles;
 
+    // ENTITIES
+    private EntityManager entityManager;
+
     // constructor... 2 ways to create worlds... (1) randomly generated worlds... or (2) load in worlds from a file.
     // The second option will be the same world everytime, this is what we'll learn now. We'll need the location on our
     // computer of the file that we want to load, passed in as an argument to the constructor.
     public World(Handler handler, String path) {
         this.handler = handler;
+
+        // Important to instantiate EntityManager before loadWorld().
+        entityManager = new EntityManager(handler, new Player(handler, 100, 100));
+        entityManager.addEntity( new CactusTree(handler, 100, 250) );
+        entityManager.addEntity( new CactusTree(handler, 100, 350) );
+        entityManager.addEntity( new CactusTree(handler, 100, 450) );
+
         loadWorld(path);
+
+        // After we load the world... MAKE SURE IT'S after! WE NEED THE spawnX and spawnY FROM READING THE MAP file.
+        entityManager.getPlayer().setX(spawnX);
+        entityManager.getPlayer().setY(spawnY);
     } // **** end World(Handler, String) constructor ****
 
     // loadWorld(String) method is responsible for getting the file that we want to load as our world and storing it in
@@ -96,7 +113,7 @@ public class World {
 
     // To update the position of all the tiles and things like that.
     public void tick() {
-
+        entityManager.tick();
     }
 
     // To draw all the tiles to the screen, that way we can see the world.
@@ -105,6 +122,7 @@ public class World {
     // NOT efficient, redrawing ALL the tiles every time. Using 4 new variables so we limit what gets redrawn (what the
     // user actually sees. It's pretty easy, but requires quite a bit of math.
     public void render(Graphics g) {
+        // TILES
         //3rd version
             // Want to prevent going into NEGATIVE numbers...
             // Using Math.max(int, int) which returns the greater of the 2 numbers (but we have to cast to int since
@@ -127,6 +145,8 @@ public class World {
                         (int) (y * Tile.TILE_HEIGHT - handler.getGameCamera().getyOffset()));
             }
         }
+        // ENTITIES
+        entityManager.render(g);
 
         /*      @@@ 1st and 2nd version where we redraw the entire World every time. @@@
         // CodeNMore is starting with y first... it's suppose to prevent a few problems down the road.

@@ -1,0 +1,55 @@
+-Swimming underground
+-Cave exploring
+-Mining
+-Something with oil?
+-Basement
+-World destroyed - survive underground
+-Travel underground, find enemies
+-Subway station? battle
+
+Top-down 2D game
+Searching for resources
+in a cave for boss, rocks
+keep falling down
+get as many resources
+without dying/get to surface?
+
+On another planet looking
+for rare resources underground
+things collapse, you must make
+object to get out of planet
+
+
+BACK FROM SLEEP
+GOING TO RE-DO
+SOME TILE STUFF
+AND A FEW LITTLE
+THINGS. CURRENT IDEA:
+under the surface of another planet, 
+must gather rare materials to build 
+a ship to get back to your home planet 
+but each time you take off you land on 
+a different planet
+
+
+"GO HOME" by CodeNMore
+Made in 48 hours for the
+Ludum Dare #29 - Beneath The Surface
+WASD - Move
+Space - Shoot
+"you are trapped on a planet far 
+away from home - you must find 
+materials underground to build 
+a shuttle back home!"
+PRESS SPACE //to begin
+
+
+Working on Ghost AI
+very simple sight system
+
+
+LEFT TO DO:
+Better Title
+Sounds/Music
+Fine-tune mechanics
+Better Graphics

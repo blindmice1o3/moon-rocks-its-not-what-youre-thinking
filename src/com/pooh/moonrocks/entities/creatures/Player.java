@@ -78,8 +78,8 @@ public class Player extends Creature {
         // Similar to what we did the the World class's render().
             // ANIMATIONS: the image passed in is from an array of BufferedImage whose index is incremented by tick() calls.
             // Initially it was (hard-coded) as the animationDown.getCurrentFrame()... so player ALWAYS shown as walking-down.
-        g.drawImage(getCurrentAnimationFrame(), (int)(x - handler.getGameCamera().getxOffset()), (int)(y - handler.getGameCamera().getyOffset()),
-                width, height, null);
+        g.drawImage(getCurrentAnimationFrame(), (int)(x - handler.getGameCamera().getxOffset()),
+                (int)(y - handler.getGameCamera().getyOffset()), width, height, null);
 
         // @@@ For TESTING PURPOSES we'll draw the visual of the bounding box (collision detection). @@@
         // Keep in mind that the bounds.x and bound.y is the starting point of pixels-shifted-into-the-image's x and y...
