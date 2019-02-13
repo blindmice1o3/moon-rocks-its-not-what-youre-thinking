@@ -30,10 +30,10 @@ public class World {
         this.handler = handler;
 
         // Important to instantiate EntityManager before loadWorld().
-        entityManager = new EntityManager(handler, new Player(handler, 100, 100));
-        entityManager.addEntity( new CactusTree(handler, 100, 250) );
-        entityManager.addEntity( new CactusTree(handler, 100, 350) );
-        entityManager.addEntity( new CactusTree(handler, 100, 450) );
+        entityManager = new EntityManager(handler, new Player(handler, 100, 100)); // x and y doesn't matter for player,
+        entityManager.addEntity( new CactusTree(handler, 100, 250) );              // gets re-set after call to
+        entityManager.addEntity( new CactusTree(handler, 100, 350) );              // loadWorld(String) to be coordinates
+        entityManager.addEntity( new CactusTree(handler, 200, 350) );              // from the MAP text file.
 
         loadWorld(path);
 
@@ -209,6 +209,10 @@ public class World {
 
     public int getHeight() {
         return height;
+    }
+
+    public EntityManager getEntityManager() {
+        return entityManager;
     }
 
 } // **** end World class ****

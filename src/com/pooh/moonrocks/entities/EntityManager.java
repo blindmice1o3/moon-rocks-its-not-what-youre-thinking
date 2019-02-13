@@ -16,6 +16,7 @@ public class EntityManager {
         this.handler = handler;
         this.player = player;
         entities = new ArrayList<Entity>();
+        addEntity(player);
     } // **** end EntityManager(Handler, Player) constructor ****
 
     public void tick() {
@@ -23,14 +24,12 @@ public class EntityManager {
             Entity e = entities.get(i);             // Showing us ArrayList's get() method vs array's indexing [index].
             e.tick();                                   //FUTURE: collision stuff will probably depend on for-loop's index.
         }
-        player.tick();
     }
 
     public void render(Graphics g) {                // Showing us for-each loop
         for (Entity e: entities) {                      //FUTURE: rendering collision stuff probably DON'T need index.
             e.render(g);
         }
-        player.render(g);
     }
 
     public void addEntity(Entity e) {

@@ -28,13 +28,28 @@ public abstract class Creature extends Entity {
 
     // This MOVES (i.e. actually changes) the x and y coordinates of the Creature. Used with subclass's getInput(), which
     // SETS the xMove and yMove variables (if no directional keys are pressed, xMove and yMove are set to 0).
+    // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    // ENTITY COLLISION: we ONLY implemented the checkEntityCollision() method inside the move() of the Creature class...
+    // (StaticEntity, like the CactusTree, we don't call the checkEntityCollision() method AT ALL!!! and that's because
+    // a CactusTree doesn't move [it's STATIC], and since a CactusTree doesn't move we don't need to check it against
+    // every single Entity for collision detection [THAT WOULD BE A WASTE OF RESOURCES AND IT WOULD SLOW DOWN OUR GAME]).
+    // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     public void move() {
         // xMove and yMove are controlled by subclass (Player) when getInput() is called. xMove and yMove are 0 when NO
         // KEYS are pressed (i.e. when up, down, left, and right variables are all false... indication not pressed).
 
-        moveX();
-        moveY();
+        // We have not actually changed our x or y position yet, so we have the OFFSETS telling the collision box where
+        // we will be moving to!
+        if (!checkEntityCollision(xMove, 0f)) {
+            moveX();
+        }
+        if (!checkEntityCollision(0f, yMove)) {
+            moveY();
+        }
 
+        // The following was a previous version. It's now inside if-statements to check for ENTITY-COLLISION.
+        //moveX();
+        //moveY();
 
         // The following was a previous version. It's now being taken care of by the 2 new methods moveX() and moveY().
         //x += xMove;
