@@ -6,6 +6,7 @@ import com.pooh.moonrocks.gfx.GameCamera;
 import com.pooh.moonrocks.gfx.ImageLoader;
 import com.pooh.moonrocks.gfx.SpriteSheet;
 import com.pooh.moonrocks.input.KeyManager;
+import com.pooh.moonrocks.input.MouseManager;
 import com.pooh.moonrocks.states.*;
 
 import java.awt.*;
@@ -25,12 +26,13 @@ public class Game implements Runnable {
     private Graphics g;
 
     // States
-    private State gameState;
-    private State menuState;
+    public State gameState;     //Changed to public for ease of use (not best-practice!!!)
+    public State menuState;     //Changed to public for ease of use (not best-practice!!!)
     private State settingState;
 
     // Input
     private KeyManager keyManager;
+    private MouseManager mouseManager;
 
     // Camera
     private GameCamera gameCamera;
@@ -43,11 +45,18 @@ public class Game implements Runnable {
         this.height = height;
         this.title = title;
         keyManager = new KeyManager();
+        mouseManager = new MouseManager();
     } // **** end Game(String, int, int) constructor ****
 
     private void init() {
         display = new Display(title, width, height);
         display.getFrame().addKeyListener(keyManager);  // The JFrame composed in Display class will listen for keyboard input.
+        display.getFrame().addMouseListener(mouseManager);
+        display.getFrame().addMouseMotionListener(mouseManager);
+        // At first it was mouseManager being used JUST for the JFrame (this could be glitchy depending on which object
+        // has the INPUT FOCUS at the time). We're going to add MouseEvent Listeners to the Canvas object as well.
+        display.getCanvas().addMouseListener(mouseManager);
+        display.getCanvas().addMouseMotionListener(mouseManager);
         Assets.init();
 
         // When game starts, the xOffset and yOffset are not shifted in any x or y direction (i.e. offsets are 0).
@@ -58,7 +67,7 @@ public class Game implements Runnable {
         gameState = new GameState(handler);
         menuState = new MenuState(handler);
         settingState = new SettingState(handler);
-        StateManager.setCurrentState(gameState);
+        StateManager.setCurrentState(menuState);    // Changing to menuState to CHECK if mouseManager is working.
     } // **** end init() ****
 
     private void tick() {
@@ -161,6 +170,10 @@ public class Game implements Runnable {
 
     public KeyManager getKeyManager() {
         return keyManager;
+    }
+
+    public MouseManager getMouseManager() {
+        return mouseManager;
     }
 
     public GameCamera getGameCamera() {
