@@ -1,0 +1,14 @@
+Add new StaticEntity subclass called SignPost.
+
+KeyManager class added a new set of boolean variables to hold direction of attacking (movement is handled by WASD keys, now attack direction is handled by arrow keys). 
+
+Moved health variable (and the constant DEFAULT_HEALTH and the line of code in the constructor that initializes the health variable to the DEFAULT_HEALTH) from Creature class to Entity class. So now, instead of Creature objects having health, every single Entity will have a health variable. 
+
+Entity class has a new boolean variable called active that is set to true to begin with, it will control whether an instance of Entity will remain in the game and whether EntityManager will remove(Entity) that instance from its list. Getters and setters for health and active variables. 
+
+Entity class also has a new method called hurt(int) which decreases that Entity's health by the int value passed into as an argument. The hurt(int) method also checks whether or not to switch the active variable (flag) to false AND calls the die() method (which can be used to drop LOOT, trigger an EXPLOSION ANIMATION, etc). The die() method is abstract. All subclasses of Entity can handle die() however they want.
+
+EntityManager's tick() method loops through all Entity objects in its list to call their tick() update method, and now checks if that Entity is no longer active (removing the Entity if its active flag is false).
+
+
+

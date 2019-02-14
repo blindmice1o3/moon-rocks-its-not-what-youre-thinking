@@ -39,6 +39,10 @@ public class EntityManager {
         for (int i = 0; i < entities.size(); i++) { // Showing us regular for-loop
             Entity e = entities.get(i);             // Showing us ArrayList's get() method vs array's indexing [index].
             e.tick();                                   //FUTURE: collision stuff will probably depend on for-loop's index.
+
+            if (!e.isActive()) {                    // After tick() [updating method], see if Entity is NOT ACTIVE...
+                entities.remove(e);                 // remove Entity from the game if no longer active.
+            }
         }
         // After updating the positions and etc for all the Entity objects in the game, SORT them based on y-coordinate
         // to figure out what should be drawn on top of what (RENDERING ORDER).

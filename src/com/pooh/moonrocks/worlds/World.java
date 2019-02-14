@@ -4,6 +4,7 @@ import com.pooh.moonrocks.Handler;
 import com.pooh.moonrocks.entities.EntityManager;
 import com.pooh.moonrocks.entities.creatures.Player;
 import com.pooh.moonrocks.entities.statics.CactusTree;
+import com.pooh.moonrocks.entities.statics.SignPost;
 import com.pooh.moonrocks.tiles.Tile;
 import com.pooh.moonrocks.utils.Utils;
 
@@ -31,7 +32,7 @@ public class World {
 
         // Important to instantiate EntityManager before loadWorld().
         entityManager = new EntityManager(handler, new Player(handler, 100, 100)); // x and y doesn't matter for player,
-        entityManager.addEntity( new CactusTree(handler, 100, 250) );              // gets re-set after call to
+        entityManager.addEntity( new SignPost(handler, 100, 250) );              // gets re-set after call to
         entityManager.addEntity( new CactusTree(handler, 100, 350) );              // loadWorld(String) to be coordinates
         entityManager.addEntity( new CactusTree(handler, 200, 350) );              // from the MAP text file.
 

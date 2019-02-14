@@ -3,7 +3,7 @@ package com.pooh.moonrocks.entities.statics;
 import com.pooh.moonrocks.Handler;
 import com.pooh.moonrocks.entities.Entity;
 
-// A StaticEntity is an Entity that DOES NOT MOVE, like a CactusTree or Rock!
+// A StaticEntity is an Entity that DOES NOT MOVE, like a CactusTree or SignPost!
 // Unlike a Creature entity, which does move, like the Player.
 public abstract class StaticEntity extends Entity {     // Similar to the Creature abstract class.
 

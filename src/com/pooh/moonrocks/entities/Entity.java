@@ -7,9 +7,13 @@ import java.awt.*;
 
 public abstract class Entity {
 
+    public static final int DEFAULT_HEALTH = 10;
+
     protected Handler handler;
     protected float x, y;
     protected int width, height;
+    protected int health;
+    protected boolean active = true;
     // Collision detection: checking a Rectangle's coordinates relative to the Player image's x, y, width, and height.
     protected Rectangle bounds;     // bounds stands for collision-bounds.
 
@@ -19,6 +23,7 @@ public abstract class Entity {
         this.y = y;
         this.width = width;
         this.height = height;
+        health = DEFAULT_HEALTH;
 
         // By default, the bounding box will have the exact same size as the Entity's image (the upper-left of the
         // image with NO offsets, and its image's width and height).
@@ -60,6 +65,37 @@ public abstract class Entity {
     public abstract void tick();
 
     public abstract void render(Graphics g);
+
+    // Subclasses of Entity will specify what happens when it dies (LOOT DROP, etc), right before it's REMOVED from the game.
+    public abstract void die();
+
+    // Decreases the Entity's health by the int value passed in as an argument.
+    public void hurt(int amount) {
+        health -= amount;
+
+        if (health <= 0) {      // The instance of Entity died, the EntityManager uses the active variable to remove it.
+            active = false;
+            die();              // The die method can be used to add code for LOOT or possibly trigger EXPLOSION ANIMATION.
+        }                       // The Entity's die() method will be called RIGHT BEFORE it gets REMOVED from the game.
+    }
+
+    // GETTERS AND SETTERS
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
     public float getX() {
         return x;
