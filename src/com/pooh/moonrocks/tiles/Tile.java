@@ -10,6 +10,7 @@ public class Tile {
     public static Tile grassTile = new GrassTile(0);// The reference variable is type Tile. The object type is GrassTile.
     public static Tile dirtTile = new DirtTile(1);  // Make sure to give every single Tile a different id.
     public static Tile rockTile = new RockTile(2);
+    public static Tile wallTile =  new WallTile(3);
 
     // CLASS
 

@@ -18,7 +18,7 @@ public class MenuState extends State {
         uiManager = new UIManager(handler);
         handler.getMouseManager().setUIManager(uiManager);
 
-        uiManager.addObject( new UIImageButton(200, 200, 128, 64, Assets.player_down, new ClickListener() {
+        uiManager.addObject( new UIImageButton(268, 160, 96, 32, Assets.startButton, new ClickListener() {
             @Override
             public void onClick() {
                 // We don't want the gameState to respond to The MouseManager's uiManager, so we have to un-set it.
