@@ -1,5 +1,7 @@
 package com.pooh.moonrocks.input;
 
+import com.pooh.moonrocks.ui.UIManager;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -11,10 +13,15 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 
     private boolean leftPressed, rightPressed;
     private int mouseX, mouseY;
+    private UIManager uiManager;
 
     public MouseManager() {
 
     } // **** end MouseManager() constructor ****
+
+    public void setUIManager(UIManager uiManager) {
+        this.uiManager = uiManager;
+    }
 
     // GETTER METHODS
 
@@ -52,12 +59,24 @@ public class MouseManager implements MouseListener, MouseMotionListener {
         } else if (e.getButton() == MouseEvent.BUTTON3) {   // BUTTON3 is the RIGHT mouse button.
             rightPressed = false;
         }
+
+        // Don't want to force the game to have a UIManager at all time, but when it does, we want a way to move the
+        // MouseEvent on to the UIManager.
+        if (uiManager != null) {
+            uiManager.onMouseRelease(e);
+        }
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
+
+        // Don't want to force the game to have a UIManager at all time, but when it does, we want a way to move the
+        // MouseEvent on to the UIManager.
+        if (uiManager != null) {
+            uiManager.onMouseMove(e);
+        }
     }
 
     @Override
