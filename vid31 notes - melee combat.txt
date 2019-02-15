@@ -10,5 +10,6 @@ Entity class also has a new method called hurt(int) which decreases that Entity'
 
 EntityManager's tick() method loops through all Entity objects in its list to call their tick() update method, and now checks if that Entity is no longer active (removing the Entity if its active flag is false).
 
+//////////////////////////////////////////////////////////////////////
 
-
+Player class's tick() method, now, also calls checkAttacks() at every game-loop tick(). A new method called checkAttacks() is added to the Player class. This method sets the Attack Rectangle's x and y starting point DEPENDING on which direction of attack RELATIVE TO THE PLAYER'S Collision Bound's x and y. Also sets the Attack Rectangle's width and height to a default size (20 pixels in our case). The last else-clause means DO NOT RUN the rest of the method because none of the attack keys are set to true. If Attack Rectangle x and y were set because the player pressed an attack key, we can BEGIN CHECKING for the attack after the if-else statements. Make sure not to attack self when looping through the entities list. Implemented attackTimer (similar to ANIMATIONS), see code's comments for details. SEE NOTEBOOK'S color-penciled DRAWING of attack-up (Watership Down word-bank notebook) FOR DETAILS ON THE EQUATIONS FROM IF-ELSE BLOCKS OF SETTING ATTACK RECTANGLE BOUNDS COORDINATE.

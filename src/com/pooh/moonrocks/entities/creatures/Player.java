@@ -2,6 +2,7 @@ package com.pooh.moonrocks.entities.creatures;
 
 import com.pooh.moonrocks.Game;
 import com.pooh.moonrocks.Handler;
+import com.pooh.moonrocks.entities.Entity;
 import com.pooh.moonrocks.gfx.Animation;
 import com.pooh.moonrocks.gfx.Assets;
 
@@ -12,6 +13,10 @@ public class Player extends Creature {
 
     // ANIMATIONS
     private Animation animationDown, animationUp, animationLeft, animationRight;
+    // ATTACK TIMER (similar to ANIMATIONS code)
+    // 250 milliseconds before the player can attack again.
+    // attackTimer = attackCooldown means player can attack right as the game starts.
+    private long lastAttackTimer, attackCooldown = 250, attackTimer = attackCooldown;
 
     public Player(Handler handler, float x, float y) {
         super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
@@ -40,12 +45,70 @@ public class Player extends Creature {
         animationRight.tick();
 
         // MOVEMENT
-        // Check for whether up, down, left, or right are pressed.
-        getInput();
-        // Where we actually change the x and y coordinate of the Creature.
-        move();
-        // Whenever the player's tick() method is called, center camera on this player.
-        handler.getGameCamera().centerOnEntity(this);
+        getInput(); // Check for whether up, down, left, or right are pressed.
+        move();     // Where we actually change the x and y coordinate of the Creature.
+        handler.getGameCamera().centerOnEntity(this);   // Center camera on this player.
+
+        // ATTACK
+        checkAttacks();
+    }
+
+    /**
+     * Checks if the user is pressing the attack key, if so generate an attack. See if Rectangle (representing attack)
+     * on that side of the user intersects with an Entity's position. Have an attackTimer to limit how many times the
+     * player can attack (instead of at every tick - 60 fps), 250 milliseconds (about a quarter of a second).
+     */
+    private void checkAttacks() {
+        attackTimer += System.currentTimeMillis() - lastAttackTimer;    // !!! SIMILAR TO animations CODE !!!
+        lastAttackTimer = System.currentTimeMillis();
+        if (attackTimer < attackCooldown) { // Check player's eligibility to attack (has 250 milliseconds passed?)
+            return;
+        }
+
+        Rectangle cb = getCollisionBounds(0, 0); // cb means Collision Bounds of our player, no offsets.
+        Rectangle ar = new Rectangle(); // Temporary (local to this scope) Rectangle ar (short for Attack Rectangle).
+        int arSize = 20;    // Attack Rectangle's default size (we're using 20 pixels, can adjust).
+        ar.width = arSize;
+        ar.height = arSize;
+
+        // Begin to check WHERE to draw that attack rectangle (up, down, left, or right of the player's collision box).
+        // if-else statements mean player can only attack in one direction at a time (per tick() call).
+        // @@@@@ SEE NOTEBOOK'S color-penciled DRAWING of attack-up (Watership Down word-bank notebook) @@@@@
+        if (handler.getKeyManager().aUp) {  // If attack-UPWARD key is true...
+            // Set the x and y of the attack rectangle properly: draws just ABOVE the collision box of the player.
+
+            // ar.x = Player's CollisionBox's x + half CollisionBox's width ===> CENTER x-coordinate of our CollisionBox.
+            //        Take that CENTER and MINUS half AttackRectangle's width (aka arSize).
+            // ar.y = Player's CollisionBox's y MINUS full AttackRectangle's height (aka arSize).
+            ar.x = cb.x + (cb.width / 2) - (arSize / 2);
+            ar.y = cb.y - arSize;
+        } else if (handler.getKeyManager().aDown) {     // If attack-DOWNWARD key is true...
+            ar.x = cb.x + (cb.width / 2) - (arSize / 2);    //x-coordinate stays same (CENTERED), but y changes.
+            ar.y = cb.y + cb.height;                        //y-coordinate starts 1-full-HEIGHT-downward of player's cb.y.
+        } else if (handler.getKeyManager().aLeft) {     // If attack-LEFTWARD key is true...
+            ar.x = cb.x - arSize;                           //x-coordinate starts 1-full-ATTACKSIZE-left of player's cb.x.
+            ar.y = cb.y + (cb.height / 2) - (arSize / 2);   //y-coordinate CENTERED.
+        } else if (handler.getKeyManager().aRight) {    // If attack-RIGHTWARD key is true...
+            ar.x = cb.x + cb.width;                         //x-coordinate starts 1-full-player.width-right of player's cb.x.
+            ar.y = cb.y + (cb.height / 2) - (arSize / 2);   //y-coordinate CENTERED.
+        } else {    // !!!@@@ Default else-clause: we don't want to
+            return; //        run anything else from this method. @@@!!!
+        }
+
+        attackTimer = 0; // Didn't get RETURNed by attackCooldown nor the non-assigned Attack DIRECTION. Attack, RESET timer.
+
+        // We can begin checking for the attack: loop through every Entity in the game (besides the player itself).
+        for (Entity e: handler.getWorld().getEntityManager().getEntities()) {
+            // If the Entity IS THE PLAYER... continue to next element in the loop!
+            if (e.equals(this)) {
+                continue;
+            }
+            // If Entity from list INTERSECTS with player's AttackRectangle, then we've hit the Entity.
+            if (e.getCollisionBounds(0, 0).intersects(ar)) {
+                e.hurt(1);
+                return;  // !!!@@@ Return from this method because we only want to attack one Entity at a time. @@@!!!
+            }
+        }
     }
 
     @Override
