@@ -6,6 +6,7 @@ import com.pooh.moonrocks.entities.creatures.Player;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 
 public class EntityManager {
 
@@ -36,13 +37,17 @@ public class EntityManager {
     } // **** end EntityManager(Handler, Player) constructor ****
 
     public void tick() {
-        for (int i = 0; i < entities.size(); i++) { // Showing us regular for-loop
-            Entity e = entities.get(i);             // Showing us ArrayList's get() method vs array's indexing [index].
-            e.tick();                                   //FUTURE: collision stuff will probably depend on for-loop's index.
+        // video32: Item Drop. Updated way of traversing the ArrayList of Entity is to use an iterator and a while-loop.
+        Iterator<Entity> iterator = entities.iterator();
+        // Previous way we looped it was for-loop, which CAN CAUSE PROBLEMS (dynamically removing/altering ArrayList during
+        // a traversal cycle... every now and then the if-state will be true and we'll randomly remove while traversing).
+        while (iterator.hasNext()) { // Using an Iterator in a while-loop as of video32: Item Drops.
+            Entity e = iterator.next(); // Instead of a get(index) call to the ArrayList (ArrayList is altering itself),
+            e.tick();                   // we're using an Iterator (external object) to get the next object in the list.
 
             if (!e.isActive()) {                    // After tick() [updating method], see if Entity is NOT ACTIVE...
-                entities.remove(e);                 // remove Entity from the game if no longer active.
-            }
+                iterator.remove();                 // remove Entity from the game if no longer active (USING ITERATOR).
+            } // @@@ USING ITERATOR OBJECT TO REMOVE the entity NOW RATHER THAN ArrayList's remove(Entity), SAFER! @@@
         }
         // After updating the positions and etc for all the Entity objects in the game, SORT them based on y-coordinate
         // to figure out what should be drawn on top of what (RENDERING ORDER).
