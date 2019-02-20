@@ -2,6 +2,7 @@ package com.pooh.moonrocks.entities.statics;
 
 import com.pooh.moonrocks.Handler;
 import com.pooh.moonrocks.gfx.Assets;
+import com.pooh.moonrocks.items.Item;
 import com.pooh.moonrocks.tiles.Tile;
 
 import java.awt.*;
@@ -31,7 +32,14 @@ public class CactusTree extends StaticEntity {
 
     @Override
     public void die() {
+        // When the player destroys a CactusTree, the CactusTree's die() method will drop an Item into the World.
+        // Using Item class's static Item object's createNew() method.
 
+        // So we're CREATING A COPY OF A static waterItem's properties, and we're setting an x and y position (in this
+        // case, the same position as the CactusTree object).
+
+        // Must cast the x and y of the Entity (which uses float) to int.
+        handler.getWorld().getItemManager().addItem(Item.waterItem.createNew((int)x, (int)y));
     }
 
     @Override
@@ -39,10 +47,10 @@ public class CactusTree extends StaticEntity {
         g.drawImage(Assets.cactusTree, (int)(x - handler.getGameCamera().getxOffset()),
                 (int)(y - handler.getGameCamera().getyOffset()), width, height, null);
 
-        g.setColor(Color.RED);
-        g.fillRect( (int)( x + bounds.x - handler.getGameCamera().getxOffset() ),
-                (int)( y + bounds.y - handler.getGameCamera().getyOffset() ),
-                bounds.width, bounds.height);
+//        g.setColor(Color.RED);
+//        g.fillRect( (int)( x + bounds.x - handler.getGameCamera().getxOffset() ),
+//                (int)( y + bounds.y - handler.getGameCamera().getyOffset() ),
+//                bounds.width, bounds.height);
     }
 
 } // **** end CactusTree class ****

@@ -6,13 +6,15 @@ import com.pooh.moonrocks.gfx.Assets;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+// (Will look almost the same as the Tile class)
 public class Item {
-        // (Will look almost the same as the Tile class)
+
     // HANDLER
 
         // (Similar to the Tile class's Tile[] array)
     public static Item[] items = new Item[256];
-    public static Item waterItem = new Item(Assets.water, "water", 0);
+    public static Item woodItem = new Item(Assets.woodItem, "woodItem", 0);
+    public static Item waterItem = new Item(Assets.waterItem, "waterItem", 1);
 
     // CLASS
 
@@ -34,21 +36,28 @@ public class Item {
         // This count variable is going to store the amount of this item in the Item object (e.g. Wood item... instead
         // of creating 50 new instances of wood, we can just have one instance of that wood Item and set the count equal
         // to 50 indicating that the player has 50 of them.
-        count = 1;
+        count = 1;  // If count becomes -1 (PICKED_UP constant), it means have to remove Item from World, put into Inventory.
+
+        // When we make an Item, we'll want to set the Item[] items array's element at index id equal to that item object.
+        items[id] = this;
     } // **** end Item() constructor ****
 
     public void tick() {
 
     }
 
+    // Items can be in 1 of 2 STATES:
+    // (1) If in the game world (lying on the ground).
     // Calls the overloaded render(Graphics, int, int) and give it the Item's CURRENT x and y (INSTEAD OF THROUGH PARAMETERS).
     public void render(Graphics g) {
+        // Didn't take in Handler object in constructor, so handler MAY BE null... must check!
         if (handler == null) {
             return;
         }
         render(g, (int)(x - handler.getGameCamera().getxOffset()), (int)(y - handler.getGameCamera().getyOffset()));
     }
 
+    // (2) If in the player's inventory.
     public void render(Graphics g, int x, int y) {
         g.drawImage(texture, x, y, Item.ITEM_WIDTH, Item.ITEM_HEIGHT, null);
     }

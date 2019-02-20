@@ -5,6 +5,7 @@ import com.pooh.moonrocks.entities.EntityManager;
 import com.pooh.moonrocks.entities.creatures.Player;
 import com.pooh.moonrocks.entities.statics.CactusTree;
 import com.pooh.moonrocks.entities.statics.SignPost;
+import com.pooh.moonrocks.items.ItemManager;
 import com.pooh.moonrocks.tiles.Tile;
 import com.pooh.moonrocks.utils.Utils;
 
@@ -24,6 +25,9 @@ public class World {
     // ENTITIES
     private EntityManager entityManager;
 
+    // ITEMS
+    private ItemManager itemManager;
+
     // constructor... 2 ways to create worlds... (1) randomly generated worlds... or (2) load in worlds from a file.
     // The second option will be the same world everytime, this is what we'll learn now. We'll need the location on our
     // computer of the file that we want to load, passed in as an argument to the constructor.
@@ -35,6 +39,8 @@ public class World {
         entityManager.addEntity( new SignPost(handler, 100, 250) );              // gets re-set after call to
         entityManager.addEntity( new CactusTree(handler, 100, 350) );              // loadWorld(String) to be coordinates
         entityManager.addEntity( new CactusTree(handler, 200, 350) );              // from the MAP text file.
+
+        itemManager = new ItemManager(handler);
 
         loadWorld(path);
 
@@ -114,6 +120,7 @@ public class World {
 
     // To update the position of all the tiles and things like that.
     public void tick() {
+        itemManager.tick();     // Update Items first, then Entitys.
         entityManager.tick();
     }
 
@@ -146,6 +153,8 @@ public class World {
                         (int) (y * Tile.TILE_HEIGHT - handler.getGameCamera().getyOffset()));
             }
         }
+        // ITEMS
+        itemManager.render(g);  // Update Items first, then Entitys. Entity drawn ON TOP OF Item.
         // ENTITIES
         entityManager.render(g);
 
@@ -210,6 +219,22 @@ public class World {
 
     public int getHeight() {
         return height;
+    }
+
+    public Handler getHandler() {
+        return handler;
+    }
+
+    public void setHandler(Handler handler) {
+        this.handler = handler;
+    }
+
+    public ItemManager getItemManager() {
+        return itemManager;
+    }
+
+    public void setItemManager(ItemManager itemManager) {
+        this.itemManager = itemManager;
     }
 
     public EntityManager getEntityManager() {
