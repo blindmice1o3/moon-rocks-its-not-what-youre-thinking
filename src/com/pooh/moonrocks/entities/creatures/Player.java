@@ -186,4 +186,14 @@ public class Player extends Creature {
         }                       // We could use a standing still image as default, then would just add another if-else for DOWN.
     }
 
+    // GETTERS AND SETTERS
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
+
 } // **** end Player class ****

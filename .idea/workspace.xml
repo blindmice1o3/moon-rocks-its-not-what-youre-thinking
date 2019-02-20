@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fa7d2a63-c788-432e-a539-5ef9f042d3ec" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/pooh/moonrocks/inventory/Inventory.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/pooh/moonrocks/entities/creatures/Player.java" afterPath="$PROJECT_DIR$/src/com/pooh/moonrocks/entities/creatures/Player.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/pooh/moonrocks/inventory/Inventory.java" afterPath="$PROJECT_DIR$/src/com/pooh/moonrocks/inventory/Inventory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/pooh/moonrocks/items/Item.java" afterPath="$PROJECT_DIR$/src/com/pooh/moonrocks/items/Item.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/pooh/moonrocks/items/ItemManager.java" afterPath="$PROJECT_DIR$/src/com/pooh/moonrocks/items/ItemManager.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,11 +24,13 @@
       <file leaf-file-name="Item.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/pooh/moonrocks/items/Item.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="63" column="70" lean-forward="false" selection-start-line="63" selection-start-column="70" selection-end-line="63" selection-end-column="70" />
+            <state relative-caret-position="170">
+              <caret line="64" column="117" lean-forward="true" selection-start-line="64" selection-start-column="117" selection-end-line="64" selection-end-column="117" />
               <folding>
-                <element signature="e#3950#3951#0" expanded="true" />
-                <element signature="e#4023#4024#0" expanded="true" />
+                <element signature="e#4027#4028#0" expanded="true" />
+                <element signature="e#4100#4101#0" expanded="true" />
+                <element signature="e#4545#4546#0" expanded="true" />
+                <element signature="e#4576#4577#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -45,16 +49,14 @@
       <file leaf-file-name="Inventory.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/pooh/moonrocks/inventory/Inventory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="29" column="120" lean-forward="true" selection-start-line="29" selection-start-column="120" selection-end-line="29" selection-end-column="120" />
+            <state relative-caret-position="340">
+              <caret line="36" column="67" lean-forward="false" selection-start-line="36" selection-start-column="67" selection-end-line="36" selection-end-column="67" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#257#258#0" expanded="true" />
-                <element signature="e#295#296#0" expanded="true" />
-                <element signature="e#1643#1644#0" expanded="true" />
-                <element signature="e#1673#1674#0" expanded="true" />
-                <element signature="e#1720#1721#0" expanded="true" />
-                <element signature="e#1758#1759#0" expanded="true" />
+                <element signature="e#2775#2776#0" expanded="true" />
+                <element signature="e#2805#2806#0" expanded="true" />
+                <element signature="e#2852#2853#0" expanded="true" />
+                <element signature="e#2890#2891#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -64,7 +66,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/pooh/moonrocks/items/ItemManager.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="323">
-              <caret line="26" column="49" lean-forward="true" selection-start-line="26" selection-start-column="49" selection-end-line="26" selection-end-column="49" />
+              <caret line="26" column="33" lean-forward="false" selection-start-line="26" selection-start-column="33" selection-end-line="26" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -87,8 +89,8 @@
       <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/pooh/moonrocks/entities/creatures/Player.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="159" column="28" lean-forward="false" selection-start-line="159" selection-start-column="28" selection-end-line="159" selection-end-column="28" />
+            <state relative-caret-position="527">
+              <caret line="195" column="35" lean-forward="false" selection-start-line="195" selection-start-column="35" selection-end-line="195" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -212,14 +214,14 @@
         <option value="$PROJECT_DIR$/src/com/pooh/moonrocks/entities/statics/Rock.java" />
         <option value="$PROJECT_DIR$/src/com/pooh/moonrocks/entities/Entity.java" />
         <option value="$PROJECT_DIR$/src/com/pooh/moonrocks/entities/EntityManager.java" />
-        <option value="$PROJECT_DIR$/src/com/pooh/moonrocks/items/ItemManager.java" />
         <option value="$PROJECT_DIR$/src/com/pooh/moonrocks/worlds/World.java" />
         <option value="$PROJECT_DIR$/src/com/pooh/moonrocks/entities/statics/CactusTree.java" />
         <option value="$PROJECT_DIR$/src/com/pooh/moonrocks/entities/statics/SignPost.java" />
         <option value="$PROJECT_DIR$/src/com/pooh/moonrocks/gfx/Assets.java" />
-        <option value="$PROJECT_DIR$/src/com/pooh/moonrocks/items/Item.java" />
         <option value="$PROJECT_DIR$/src/com/pooh/moonrocks/input/KeyManager.java" />
+        <option value="$PROJECT_DIR$/src/com/pooh/moonrocks/items/ItemManager.java" />
         <option value="$PROJECT_DIR$/src/com/pooh/moonrocks/entities/creatures/Player.java" />
+        <option value="$PROJECT_DIR$/src/com/pooh/moonrocks/items/Item.java" />
         <option value="$PROJECT_DIR$/src/com/pooh/moonrocks/inventory/Inventory.java" />
       </list>
     </option>
@@ -899,27 +901,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/pooh/moonrocks/items/ItemManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="26" column="49" lean-forward="true" selection-start-line="26" selection-start-column="49" selection-end-line="26" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/pooh/moonrocks/items/Item.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="63" column="70" lean-forward="false" selection-start-line="63" selection-start-column="70" selection-end-line="63" selection-end-column="70" />
-          <folding>
-            <element signature="e#3950#3951#0" expanded="true" />
-            <element signature="e#4023#4024#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/pooh/moonrocks/tiles/Tile.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
@@ -936,26 +917,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/pooh/moonrocks/items/ItemManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="26" column="33" lean-forward="false" selection-start-line="26" selection-start-column="33" selection-end-line="26" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/pooh/moonrocks/entities/creatures/Player.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="159" column="28" lean-forward="false" selection-start-line="159" selection-start-column="28" selection-end-line="159" selection-end-column="28" />
+        <state relative-caret-position="527">
+          <caret line="195" column="35" lean-forward="false" selection-start-line="195" selection-start-column="35" selection-end-line="195" selection-end-column="35" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/pooh/moonrocks/items/Item.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="64" column="117" lean-forward="true" selection-start-line="64" selection-start-column="117" selection-end-line="64" selection-end-column="117" />
+          <folding>
+            <element signature="e#4027#4028#0" expanded="true" />
+            <element signature="e#4100#4101#0" expanded="true" />
+            <element signature="e#4545#4546#0" expanded="true" />
+            <element signature="e#4576#4577#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/pooh/moonrocks/inventory/Inventory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="29" column="120" lean-forward="true" selection-start-line="29" selection-start-column="120" selection-end-line="29" selection-end-column="120" />
+        <state relative-caret-position="340">
+          <caret line="36" column="67" lean-forward="false" selection-start-line="36" selection-start-column="67" selection-end-line="36" selection-end-column="67" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#257#258#0" expanded="true" />
-            <element signature="e#295#296#0" expanded="true" />
-            <element signature="e#1643#1644#0" expanded="true" />
-            <element signature="e#1673#1674#0" expanded="true" />
-            <element signature="e#1720#1721#0" expanded="true" />
-            <element signature="e#1758#1759#0" expanded="true" />
+            <element signature="e#2775#2776#0" expanded="true" />
+            <element signature="e#2805#2806#0" expanded="true" />
+            <element signature="e#2852#2853#0" expanded="true" />
+            <element signature="e#2890#2891#0" expanded="true" />
           </folding>
         </state>
       </provider>

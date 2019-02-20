@@ -24,7 +24,7 @@ public class ItemManager {
             Item i = it.next();
             i.tick();
             // If the player has picked up that Item, we need to remove it from World and add it to Inventory.
-            if (i.getCount() == Item.PICKED_UP) {
+            if (i.isPickedUp()) {
                 it.remove();    // This removes it from the List (the game world). We haven't gotten to Inventory yet.
             }
         }
