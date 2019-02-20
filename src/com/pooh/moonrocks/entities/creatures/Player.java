@@ -5,6 +5,7 @@ import com.pooh.moonrocks.Handler;
 import com.pooh.moonrocks.entities.Entity;
 import com.pooh.moonrocks.gfx.Animation;
 import com.pooh.moonrocks.gfx.Assets;
+import com.pooh.moonrocks.inventory.Inventory;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -17,6 +18,8 @@ public class Player extends Creature {
     // 250 milliseconds before the player can attack again.
     // attackTimer = attackCooldown means player can attack right as the game starts.
     private long lastAttackTimer, attackCooldown = 250, attackTimer = attackCooldown;
+    // INVENTORY
+    private Inventory inventory;
 
     public Player(Handler handler, float x, float y) {
         super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
@@ -34,6 +37,8 @@ public class Player extends Creature {
         animationUp = new Animation(500, Assets.player_up);
         animationLeft = new Animation(500, Assets.player_left);
         animationRight = new Animation(500, Assets.player_right);
+
+        inventory = new Inventory(handler);
     } // **** end Player(Handler, float, float) constructor ****
 
     @Override
@@ -51,6 +56,9 @@ public class Player extends Creature {
 
         // ATTACK
         checkAttacks();
+
+        // INVENTORY
+        inventory.tick();
     }
 
     /**
@@ -148,6 +156,8 @@ public class Player extends Creature {
             // Initially it was (hard-coded) as the animationDown.getCurrentFrame()... so player ALWAYS shown as walking-down.
         g.drawImage(getCurrentAnimationFrame(), (int)(x - handler.getGameCamera().getxOffset()),
                 (int)(y - handler.getGameCamera().getyOffset()), width, height, null);
+
+        inventory.render(g);
 
         // @@@ For TESTING PURPOSES we'll draw the visual of the bounding box (collision detection). @@@
         // Keep in mind that the bounds.x and bound.y is the starting point of pixels-shifted-into-the-image's x and y...
