@@ -24,6 +24,9 @@ public class Item {
     protected BufferedImage texture;
     protected String name;
     protected final int id;
+
+    protected Rectangle bounds;
+
     // If count EVER BECOMES the value of PICKED_UP constant (e.g. -1) we have to remove that item of the World and put
     // it into the player's inventory (which will be developed later).
     protected int x, y, count;
@@ -38,12 +41,26 @@ public class Item {
         // to 50 indicating that the player has 50 of them.
         count = 1;  // If count becomes -1 (PICKED_UP constant), it means have to remove Item from World, put into Inventory.
 
+        // Our x and y haven't been set yet in the constructor. When we call createNew() it calls setPosition(), so we need
+        // to set bounds.x and bounds.y inside of setPosition().
+        bounds = new Rectangle(x, y, ITEM_WIDTH, ITEM_HEIGHT);
+
         // When we make an Item, we'll want to set the Item[] items array's element at index id equal to that item object.
         items[id] = this;
     } // **** end Item() constructor ****
 
+    // ItemManager goes through every Item in the World in its tick() and removes if the Item's count variable is set
+    // to -1 (PICKED_UP). But how do we know when to set the count variable to -1? If player's bounding rectangle
+    // overlaps with the the current item's bounding rectangle, then that means the Item should be picked up (the player
+    // has walked over the item. Every Item's tick() method is constantly being called by the ItemManager, the Item's tick()
+    // is the perfect place to put the code to check if the Item should be picked up or not. And if it should be picked
+    // up, all we have to do is set the count variable equal to -1 and everything will be handled for us.
     public void tick() {
-
+        // If the boundary rectangle of the player (with offsets of 0f, 0f) INTERSECTS with the current Item's bounds...
+        // that means the Item should be picked up.
+        if (handler.getWorld().getEntityManager().getPlayer().getCollisionBounds(0f, 0f).intersects(bounds)) {
+            count = PICKED_UP;  // The ItemManager will REMOVE THE item FROM THE WORLD for us when we walk over it!!!
+        }                       // BUT... the item is just vanishing from the world, it's not being stored anywhere yet.
     }
 
     // Items can be in 1 of 2 STATES:
@@ -59,7 +76,7 @@ public class Item {
 
     // (2) If in the player's inventory.
     public void render(Graphics g, int x, int y) {
-        g.drawImage(texture, x, y, Item.ITEM_WIDTH, Item.ITEM_HEIGHT, null);
+        g.drawImage(texture, x, y, ITEM_WIDTH, ITEM_HEIGHT, null);
     }
 
     // HELPER METHODS
@@ -74,6 +91,8 @@ public class Item {
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
+        bounds.x = x;
+        bounds.y = y;
     }
 
     // GETTERS AND SETTERS
