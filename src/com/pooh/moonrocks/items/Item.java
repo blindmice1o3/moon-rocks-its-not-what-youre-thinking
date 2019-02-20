@@ -61,7 +61,7 @@ public class Item {
         if (handler.getWorld().getEntityManager().getPlayer().getCollisionBounds(0f, 0f).intersects(bounds)) {
             count = PICKED_UP;  // The ItemManager will REMOVE THE item FROM THE WORLD for us when we walk over it!!!
         }                       // BUT... the item is just vanishing from the world, it's not being stored anywhere yet.
-    }
+    }                           // SEE KeyManager class for next part.
 
     // Items can be in 1 of 2 STATES:
     // (1) If in the game world (lying on the ground).
