@@ -13,8 +13,8 @@ public class Item {
 
         // (Similar to the Tile class's Tile[] array)
     public static Item[] items = new Item[256];
-    public static Item woodItem = new Item(Assets.woodItem, "woodItem", 0);
-    public static Item waterItem = new Item(Assets.waterItem, "waterItem", 1);
+    public static Item woodItem = new Item(Assets.woodItem, "wood", 0);
+    public static Item waterItem = new Item(Assets.waterItem, "water", 1);
 
     // CLASS
 

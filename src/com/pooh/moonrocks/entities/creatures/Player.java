@@ -73,6 +73,11 @@ public class Player extends Creature {
             return;
         }
 
+        // If inventory window is opened, don't want player to be able to attack.
+        if (inventory.isActive()) {
+            return;
+        }
+
         Rectangle cb = getCollisionBounds(0, 0); // cb means Collision Bounds of our player, no offsets.
         Rectangle ar = new Rectangle(); // Temporary (local to this scope) Rectangle ar (short for Attack Rectangle).
         int arSize = 20;    // Attack Rectangle's default size (we're using 20 pixels, can adjust).
@@ -131,6 +136,11 @@ public class Player extends Creature {
         // yMove would still have a value).
         xMove = 0;
         yMove = 0;
+
+        // If inventory window is opened, don't want player to be able to move.
+        if (inventory.isActive()) {
+            return;
+        }
 
         // Instead of directly affecting the x and y coordinates of our player, we're setting our xMove and yMove variables
         // equal to a certain speed (positive or negative, depending on the direction we should be moving along which axis).
