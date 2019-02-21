@@ -1,10 +1,13 @@
 package com.pooh.moonrocks.gfx;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Assets {
 
     private static final int WIDTH = 16, HEIGHT = 16;   // constants for the player.gif spritesheet.
+
+    public static Font font28;
 
     public static BufferedImage dirt, grass, rock, wall;
 
@@ -18,6 +21,8 @@ public class Assets {
     public static BufferedImage inventoryScreen;
 
     public static void init() {
+        font28 = FontLoader.loadFont("resource/fonts/slkscr.ttf", 28);
+
         SpriteSheet sheet = new SpriteSheet( ImageLoader.loadImage("/textures/player.gif") );
         SpriteSheet sheetTile = new SpriteSheet( ImageLoader.loadImage("/textures/tile_map(B04505_03_03).jpg") );
         SpriteSheet sheetStartButton = new SpriteSheet( ImageLoader.loadImage("/textures/StartButtons(96x64).png") );

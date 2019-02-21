@@ -83,7 +83,15 @@ public class Item {
 
     // HELPER METHODS
 
-    // Create a copy of the Item object that's at the x and y position passed in.
+    // Overloaded createNew(int) method: USED ONLY FOR TESTING AND DEBUGGING PURPOSES. Does not add into the game world.
+    public Item createNew(int count) {
+        Item i = new Item(texture, name, id);
+        i.setPickedUp(true);
+        i.setCount(count);
+        return i;
+    }
+
+    // Create a copy of the Item object that's at the x and y position passed in. This version is to add to game world.
     public Item createNew(int x, int y) {
         Item i = new Item(texture, name, id);
         i.setPosition(x, y);
@@ -101,6 +109,10 @@ public class Item {
 
     public boolean isPickedUp() {
         return pickedUp;
+    }
+
+    public void setPickedUp(boolean pickedUp) {
+        this.pickedUp = pickedUp;
     }
 
     public Handler getHandler() {

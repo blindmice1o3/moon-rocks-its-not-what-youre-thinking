@@ -2,6 +2,7 @@ package com.pooh.moonrocks.inventory;
 
 import com.pooh.moonrocks.Handler;
 import com.pooh.moonrocks.gfx.Assets;
+import com.pooh.moonrocks.gfx.Text;
 import com.pooh.moonrocks.items.Item;
 
 import java.awt.*;
@@ -17,12 +18,15 @@ public class Inventory {
     // Hard-coded values for where (and how large) to display the inventoryScreen from Assets class.
     private int invX = 60, invY = 25, invWidth = 520, invHeight = 320;
 
-    private int invListCenterX = invX + 171,
-                invListCenterY = invY + invHeight / 2 + 5;
+    private int invListCenterX = invX + 165,
+                invListCenterY = invY + invHeight / 2 ;
 
     public Inventory(Handler handler) {
         this.handler = handler;
         inventoryItems = new ArrayList<Item>();
+
+        addItem(Item.waterItem.createNew(5));
+        addItem(Item.woodItem.createNew(3));
     } // **** end Inventory(Handler) constructor ****
 
     public void tick() {
@@ -53,6 +57,9 @@ public class Inventory {
         }
         // This is calls in EntityManager's render(Graphics) AFTER ALL THE ENTITYS in the game is looped/drawn.
         g.drawImage(Assets.inventoryScreen, invX, invY, invWidth, invHeight, null);
+
+        // After drawing the inventoryScreen, we draw all the TEXT on top of the inventoryScreen.
+        Text.drawString(g, "> Wood Item <", invListCenterX, invListCenterY, true, Color.WHITE, Assets.font28);
     }
 
     // Inventory methods
