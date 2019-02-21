@@ -1,6 +1,7 @@
 package com.pooh.moonrocks.inventory;
 
 import com.pooh.moonrocks.Handler;
+import com.pooh.moonrocks.gfx.Assets;
 import com.pooh.moonrocks.items.Item;
 
 import java.awt.*;
@@ -12,6 +13,12 @@ public class Inventory {
     private Handler handler;
     private boolean active = false;
     private ArrayList<Item> inventoryItems;
+
+    // Hard-coded values for where (and how large) to display the inventoryScreen from Assets class.
+    private int invX = 60, invY = 25, invWidth = 520, invHeight = 320;
+
+    private int invListCenterX = invX + 171,
+                invListCenterY = invY + invHeight / 2 + 5;
 
     public Inventory(Handler handler) {
         this.handler = handler;
@@ -44,7 +51,8 @@ public class Inventory {
         if (!active) {
             return;
         }
-
+        // This is calls in EntityManager's render(Graphics) AFTER ALL THE ENTITYS in the game is looped/drawn.
+        g.drawImage(Assets.inventoryScreen, invX, invY, invWidth, invHeight, null);
     }
 
     // Inventory methods

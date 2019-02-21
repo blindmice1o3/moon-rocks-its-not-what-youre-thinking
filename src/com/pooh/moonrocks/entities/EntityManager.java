@@ -64,6 +64,7 @@ public class EntityManager {
         for (Entity e: entities) {                      //FUTURE: rendering collision stuff probably DON'T need index.
             e.render(g);
         }
+        player.postRender(g);
     }
 
     public void addEntity(Entity e) {

@@ -6,17 +6,26 @@ public class Assets {
 
     private static final int WIDTH = 16, HEIGHT = 16;   // constants for the player.gif spritesheet.
 
-    public static BufferedImage dirt, grass, rock, cactusTree, wall, signPost, waterItem, woodItem;
+    public static BufferedImage dirt, grass, rock, wall;
+
+    public static BufferedImage cactusTree, signPost;
+    public static BufferedImage waterItem, woodItem;
+
     public static BufferedImage[] player_down, player_up, player_left, player_right;
     public static BufferedImage[] player_sail_down, player_sail_up, player_sail_left, player_sail_right;
     public static BufferedImage[] startButton;
+
+    public static BufferedImage inventoryScreen;
 
     public static void init() {
         SpriteSheet sheet = new SpriteSheet( ImageLoader.loadImage("/textures/player.gif") );
         SpriteSheet sheetTile = new SpriteSheet( ImageLoader.loadImage("/textures/tile_map(B04505_03_03).jpg") );
         SpriteSheet sheetStartButton = new SpriteSheet( ImageLoader.loadImage("/textures/StartButtons(96x64).png") );
-        SpriteSheet sheetWater = new SpriteSheet( ImageLoader.loadImage("/textures/waterItem.png") );
-        SpriteSheet sheetWood = new SpriteSheet( ImageLoader.loadImage("/textures/woodItem.png") );
+
+        waterItem = ImageLoader.loadImage("/textures/waterItem.png");
+        woodItem = ImageLoader.loadImage("/textures/woodItem.png");
+
+        inventoryScreen = ImageLoader.loadImage("/textures/inventoryScreen.png");
 
         dirt = sheetTile.crop(167, 101, 32, 32);
         grass = sheetTile.crop(167, 134, 32, 32);
@@ -24,9 +33,6 @@ public class Assets {
         cactusTree = sheetTile.crop(204, 105, 24, 22);
         wall = sheetTile.crop(35, 35, 32, 32);
         signPost = sheetTile.crop(167, 167, 32, 32);
-
-        waterItem = sheetWater.crop(0, 0, 32, 32);
-        woodItem = sheetWood.crop(0, 0, 32, 32);
 
         startButton = new BufferedImage[2];
         startButton[0] = sheetStartButton.crop(0, 0, 96, 31);

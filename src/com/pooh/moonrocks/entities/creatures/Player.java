@@ -157,8 +157,6 @@ public class Player extends Creature {
         g.drawImage(getCurrentAnimationFrame(), (int)(x - handler.getGameCamera().getxOffset()),
                 (int)(y - handler.getGameCamera().getyOffset()), width, height, null);
 
-        inventory.render(g);
-
         // @@@ For TESTING PURPOSES we'll draw the visual of the bounding box (collision detection). @@@
         // Keep in mind that the bounds.x and bound.y is the starting point of pixels-shifted-into-the-image's x and y...
         // that's why there's the "x + " or "y + " in front of those arguments.
@@ -170,6 +168,15 @@ public class Player extends Creature {
         // is the full image of the player (i.e. the red filled rectangle covers the player's entire image).
 
         // !!! See Creature class for getting COLLISION DETECTION working !!!
+    }
+
+    /**
+     * In EntityManager, after we render(Graphics) the player... we'll call postRender(Graphics), which draws the
+     * inventoryScreen.
+     */
+    public void postRender(Graphics g) {
+        // This was moved out of render(Graphics) to this postRender(Graphics), so Entity won't be drawn on top of it.
+        inventory.render(g);
     }
 
     // Our ANIMATIONS didn't change when we're moving right, left, and up... it's always the down animation. New method.
