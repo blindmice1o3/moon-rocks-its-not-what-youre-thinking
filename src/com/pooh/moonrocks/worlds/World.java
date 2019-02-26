@@ -5,6 +5,7 @@ import com.pooh.moonrocks.entities.EntityManager;
 import com.pooh.moonrocks.entities.creatures.Player;
 import com.pooh.moonrocks.entities.statics.CactusTree;
 import com.pooh.moonrocks.entities.statics.SignPost;
+import com.pooh.moonrocks.items.Item;
 import com.pooh.moonrocks.items.ItemManager;
 import com.pooh.moonrocks.tiles.Tile;
 import com.pooh.moonrocks.utils.Utils;
@@ -41,6 +42,9 @@ public class World {
         entityManager.addEntity( new CactusTree(handler, 200, 350) );              // from the MAP text file.
 
         itemManager = new ItemManager(handler);
+        itemManager.addItem(Item.woodItem.createNew(400, 140));
+        itemManager.addItem(Item.waterItem.createNew(400, 390));
+        itemManager.addItem(Item.woodItem.createNew(400, 440));
 
         loadWorld(path);
 
