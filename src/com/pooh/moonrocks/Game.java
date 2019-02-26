@@ -168,6 +168,10 @@ public class Game implements Runnable {
 
     } // **** end run() ****
 
+    public Display getDisplay() {
+        return display;
+    }
+
     public KeyManager getKeyManager() {
         return keyManager;
     }
