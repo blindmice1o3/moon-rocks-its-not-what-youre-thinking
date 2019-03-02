@@ -1,0 +1,40 @@
+cameraWidth = 16 tiles
+cameraHeight = 14 tiles
+cameraWidth = 16 tiles * 16 pixels = 256 pixels
+cameraHeight = 14 tiles * 16 pixels = 224 pixels
+
+each step = 16 pixels
+
+width: 944/16 = 59 pixels/tile 
+height: 502/14 = 35.857 pixels/tile
+
+
+
+width = 49 tiles
+height = 49 tiles
+784 x 776
+
+784 / 49 = 16 pixels / tile
+776 / 49 = 15.8367
+
+
+784-776 = 8
+
+
+
+
+start 0 tiles right from origin
+start 14 tiles down from origin
+
+playerX = 7 tiles right from origin
+playerY = 19 tiles down from origin
+7 * 16 = 112 pixels
+19 * 16 = 304 pixels
+
+
+
+
+
+player spritesheet
+28 -> 45 => 17	
+121 -> 146 => 25

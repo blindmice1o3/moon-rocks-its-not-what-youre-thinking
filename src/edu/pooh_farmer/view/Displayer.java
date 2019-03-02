@@ -1,5 +1,6 @@
 package edu.pooh_farmer.view;
 
+import edu.pooh_farmer.PoohFarmer;
 import edu.pooh_farmer.controller.InputBehavior;
 
 import javax.swing.*;
@@ -9,16 +10,25 @@ public class Displayer {
     private JFrame frame;
     private JPanel currentPanel;
 
+    private PoohFarmer game;
+
     private InputBehavior inputBehavior;
 
-    public Displayer() {
+    public Displayer(PoohFarmer game) {
+        this.game = game;
+
         initFrame();
         initPanel();
 
         frame.setContentPane(currentPanel);
 
         frame.setVisible(true);
-    } // **** end Displayer() constructor ****
+
+        System.out.println("frame's width: " + frame.getWidth() );
+        System.out.println("frame's height: " + frame.getHeight() );
+        System.out.println("GamePanel's width: " + currentPanel.getWidth() );
+        System.out.println("GamePanel's height: " + currentPanel.getHeight() );
+    } // **** end Displayer(PoohFarmer) constructor ****
 
     private void initFrame() {
         frame = new JFrame("Pooh Farmer!");
@@ -28,7 +38,7 @@ public class Displayer {
     }
 
     public void initPanel() {
-        currentPanel = new GamePanel();
+        currentPanel = new GamePanel(game);
     }
 
 
