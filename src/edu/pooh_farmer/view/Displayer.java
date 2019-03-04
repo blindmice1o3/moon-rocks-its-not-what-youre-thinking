@@ -1,7 +1,6 @@
 package edu.pooh_farmer.view;
 
 import edu.pooh_farmer.PoohFarmer;
-import edu.pooh_farmer.controller.InputBehavior;
 
 import javax.swing.*;
 
@@ -11,8 +10,6 @@ public class Displayer {
     private JPanel currentPanel;
 
     private PoohFarmer game;
-
-    private InputBehavior inputBehavior;
 
     public Displayer(PoohFarmer game) {
         this.game = game;
@@ -41,6 +38,8 @@ public class Displayer {
         currentPanel = new GamePanel(game);
     }
 
+    // GETTERS & SETTERS
 
+    public JPanel getCurrentPanel() { return currentPanel; }
 
 }   // **** end Displayer class ****
