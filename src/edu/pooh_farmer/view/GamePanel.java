@@ -2,7 +2,6 @@ package edu.pooh_farmer.view;
 
 import edu.pooh_farmer.Listener;
 import edu.pooh_farmer.PoohFarmer;
-import edu.pooh_farmer.controller.GamePanelKeyListener;
 import edu.pooh_farmer.model.entities.Player;
 
 import javax.swing.*;

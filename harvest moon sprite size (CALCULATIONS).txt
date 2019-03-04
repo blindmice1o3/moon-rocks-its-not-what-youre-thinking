@@ -1,7 +1,7 @@
 cameraWidth = 16 tiles
 cameraHeight = 14 tiles
 cameraWidth = 16 tiles * 16 pixels = 256 pixels
-cameraHeight = 14 tiles * 16 pixels = 224 pixels
+cameraHeight = 14 tiles * 16.8696 pixels = 236 pixels
 
 each step = 16 pixels
 
@@ -11,11 +11,11 @@ height: 502/14 = 35.857 pixels/tile
 
 
 width = 49 tiles
-height = 49 tiles
+height = 49 tiles  => CORRECTION: 46 tiles for height
 784 x 776
 
 784 / 49 = 16 pixels / tile
-776 / 49 = 15.8367
+776 / 46 = 16.86959521
 
 
 784-776 = 8

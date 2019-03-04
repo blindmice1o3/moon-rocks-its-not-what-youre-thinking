@@ -15,14 +15,19 @@ public class Player implements Subject {
     private int x = 413;    // player's startingX
     private int y = 179;    // player's startingY
 
-    private String pathPlayerImage = "resource_pooh_farmer/entities/SNES - Harvest Moon - Jack.png";
+    private String pathPlayerImage = "resource_pooh_farmer/entities/Game Boy Advance - Kingdom Hearts Chain of Memories - Winnie the Pooh.png";
+    //private String pathPlayerImage = "resource_pooh_farmer/entities/SNES - Harvest Moon - Jack.png";
     private BufferedImage playerBufferedImage;
     private Image playerImage;
 
-    private int playerSpriteSheetX = 28;
-    private int playerSpriteSheetY = 121;
-    private int playerSpriteSheetImageWidth = 17;
-    private int playerSpriteSheetImageHeight = 25;
+    private int playerSpriteSheetX = 177;
+    private int playerSpriteSheetY = 1060;
+    private int playerSpriteSheetImageWidth = 21;
+    private int playerSpriteSheetImageHeight = 33;
+    //private int playerSpriteSheetX = 28;            // Harvest Moon - Jack
+    //private int playerSpriteSheetY = 121;           // Harvest Moon - Jack
+    //private int playerSpriteSheetImageWidth = 17;
+    //private int playerSpriteSheetImageHeight = 25;
 
     public Player() {
 

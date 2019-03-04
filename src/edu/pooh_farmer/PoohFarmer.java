@@ -4,8 +4,6 @@ import edu.pooh_farmer.model.entities.Player;
 import edu.pooh_farmer.model.world.Chapter1;
 import edu.pooh_farmer.view.Displayer;
 
-import java.awt.*;
-
 /**
  * The actual GAME class.
  */

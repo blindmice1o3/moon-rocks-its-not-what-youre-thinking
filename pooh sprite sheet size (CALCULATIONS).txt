@@ -1,0 +1,33 @@
+177, 1060
+198, 1099
+
+21, 33
+
+
+tileWidth = 59
+tileHeight = 36
+
+59 / 36 = 1.6388888889
+
+
+24 tiles down - wood (border) (including)
+05 tiles down - walkway (dirt)
+17 tiles down - wood (border) (including)
+03 tiles down - walkway (dirt)
+
+**** 49 x 46 tiles ****
+
+
+32 tiles right - INNER PERIMETER wood (fence) (including)
+
+
+
+16 * 1 = 16
+16 * 2 = 32
+16 * 3 = 48
+16 * 4 = 64
+16 * 5 = 80
+16 * 6 = 96
+16 * 7 = 112
+16 * 8 = 128
+16 * 9 = 144
