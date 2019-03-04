@@ -22,7 +22,6 @@ public class GamePanel extends JPanel implements Listener {
 
     private Image playerImage;
     private Player player;
-    private int playerX, playerY;
 
     public GamePanel(PoohFarmer game) {
 
@@ -35,8 +34,6 @@ public class GamePanel extends JPanel implements Listener {
 
         player = game.getPlayer();
         playerImage = player.getPlayerImage();
-        playerX = player.getX();
-        playerY = player.getY();
 
         // Register as a LISTENER to the Player object.
         player.registerListener(this);
@@ -55,7 +52,8 @@ public class GamePanel extends JPanel implements Listener {
     }
 
     private void renderPlayer(Graphics g) {
-        g.drawImage(playerImage, player.getX(), player.getY(), player.getX() + tileWidth, player.getY() + tileHeight,
+        g.drawImage(playerImage, player.getX(), player.getY(),
+                player.getX() + tileWidth, player.getY() + tileHeight,
                 0, 0, playerImage.getWidth(null), playerImage.getHeight(null), null);
     }
 
@@ -64,6 +62,24 @@ public class GamePanel extends JPanel implements Listener {
     @Override
     public void update() {
 
+    }
+
+    // GETTERS & SETTERS
+
+    public int getCameraX() {
+        return cameraX;
+    }
+
+    public void setCameraX(int cameraX) {
+        this.cameraX = cameraX;
+    }
+
+    public int getCameraY() {
+        return cameraY;
+    }
+
+    public void setCameraY(int cameraY) {
+        this.cameraY = cameraY;
     }
 
 } // **** end GamePanel class ****
