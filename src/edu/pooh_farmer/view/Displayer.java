@@ -1,13 +1,14 @@
 package edu.pooh_farmer.view;
 
 import edu.pooh_farmer.PoohFarmer;
+import edu.pooh_farmer.controller.GamePanelKeyListener;
 
 import javax.swing.*;
 
 public class Displayer {
 
     private JFrame frame;
-    private JPanel currentPanel;
+    private GamePanel currentPanel;
 
     private PoohFarmer game;
 
@@ -32,14 +33,19 @@ public class Displayer {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(960, 540);
         frame.setLocationRelativeTo(null);
+
     }
 
     public void initPanel() {
         currentPanel = new GamePanel(game);
+
+        // Register a Keyboard listener (a new GamePanelKeyListener object) for this JPanel.
+        currentPanel.addKeyListener(new GamePanelKeyListener(game));
+        currentPanel.requestFocusInWindow();
     }
 
     // GETTERS & SETTERS
 
-    public JPanel getCurrentPanel() { return currentPanel; }
+    public GamePanel getCurrentPanel() { return currentPanel; }
 
 }   // **** end Displayer class ****

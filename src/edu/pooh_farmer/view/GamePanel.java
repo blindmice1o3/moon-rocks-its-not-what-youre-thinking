@@ -3,6 +3,7 @@ package edu.pooh_farmer.view;
 import edu.pooh_farmer.Listener;
 import edu.pooh_farmer.PoohFarmer;
 import edu.pooh_farmer.controller.GamePanelKeyListener;
+import edu.pooh_farmer.model.entities.Player;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,28 +21,26 @@ public class GamePanel extends JPanel implements Listener {
     private int tileWidth, tileHeight;
 
     private Image playerImage;
+    private Player player;
     private int playerX, playerY;
 
     public GamePanel(PoohFarmer game) {
 
         this.game = game;
+        setFocusable(true);
 
         backgroundImage = game.getChapter1().getBackgroundImage();
         tileWidth = game.getChapter1().getTileWidth();
         tileHeight = game.getChapter1().getTileHeight();
 
-        playerImage = game.getPlayer().getPlayerImage();
-        playerX = game.getPlayer().getX();
-        playerY = game.getPlayer().getY();
-
-        // Register a Keyboard listener (a new GamePanelKeyListener object) for this JPanel.
-        addKeyListener(new GamePanelKeyListener(game));
+        player = game.getPlayer();
+        playerImage = player.getPlayerImage();
+        playerX = player.getX();
+        playerY = player.getY();
 
         // Register as a LISTENER to the Player object.
-        game.getPlayer().registerListener(this);
+        player.registerListener(this);
 
-        setFocusable(true);
-        requestFocus();
     } // **** end GamePanel(PoohFarmer) constructor ****
 
     @Override
@@ -56,7 +55,7 @@ public class GamePanel extends JPanel implements Listener {
     }
 
     private void renderPlayer(Graphics g) {
-        g.drawImage(playerImage, playerX, playerY, playerX + tileWidth, playerY + tileHeight,
+        g.drawImage(playerImage, player.getX(), player.getY(), player.getX() + tileWidth, player.getY() + tileHeight,
                 0, 0, playerImage.getWidth(null), playerImage.getHeight(null), null);
     }
 

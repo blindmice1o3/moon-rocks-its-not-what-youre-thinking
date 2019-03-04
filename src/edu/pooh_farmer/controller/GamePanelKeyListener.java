@@ -28,6 +28,11 @@ public class GamePanelKeyListener implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
+        System.out.println( "keyTyped: " + e.getKeyCode() );
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case VK_W:
                 player.setY( player.getY() - tileHeight );
@@ -48,17 +53,13 @@ public class GamePanelKeyListener implements KeyListener {
             default:
                 break;
         }
+        System.out.println( "keyPressed: " + e.getKeyCode() );
         game.getDisplayer().getCurrentPanel().repaint();
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
-
-    }
-
-    @Override
     public void keyReleased(KeyEvent e) {
-
+        System.out.println( "keyReleased: " + e.getKeyCode() );
     }
 
 } // **** end GamePanelKeyListener class ****
