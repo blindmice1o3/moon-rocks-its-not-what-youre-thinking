@@ -1,33 +1,15 @@
-177, 1060
-198, 1099
+x1 = 177 
+y1 = 1060
+x2 = 198
+y2 = 1099
 
-21, 33
+198 - 177 = 21
+1099 - 1060 = 33
 
-
-tileWidth = 59
-tileHeight = 36
-
-59 / 36 = 1.6388888889
-
-
-24 tiles down - wood (border) (including)
-05 tiles down - walkway (dirt)
-17 tiles down - wood (border) (including)
-03 tiles down - walkway (dirt)
-
-**** 49 x 46 tiles ****
-
-
-32 tiles right - INNER PERIMETER wood (fence) (including)
+poohSpriteSheetImageWidth = 21
+poohSpriteSheetImageHeight = 33
 
 
 
-16 * 1 = 16
-16 * 2 = 32
-16 * 3 = 48
-16 * 4 = 64
-16 * 5 = 80
-16 * 6 = 96
-16 * 7 = 112
-16 * 8 = 128
-16 * 9 = 144
+
+
