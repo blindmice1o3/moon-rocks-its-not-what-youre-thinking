@@ -1,6 +1,5 @@
 package com.pooh.moonrocks.entities;
 
-import com.pooh.moonrocks.Game;
 import com.pooh.moonrocks.Handler;
 
 import java.awt.*;

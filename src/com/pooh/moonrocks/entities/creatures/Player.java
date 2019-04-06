@@ -21,6 +21,12 @@ public class Player extends Creature {
     // INVENTORY
     private Inventory inventory;
 
+    // MELEE ATTACK
+    private boolean attacking = false;
+    private Rectangle cb;
+    private Rectangle ar;
+    private int arSize;
+
     public Player(Handler handler, float x, float y) {
         super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
 
@@ -39,6 +45,12 @@ public class Player extends Creature {
         animationRight = new Animation(500, Assets.player_right);
 
         inventory = new Inventory(handler);
+
+
+        ar = new Rectangle(); // Rectangle ar (short for Attack Rectangle).
+        arSize = 20;    // Attack Rectangle's default size (we're using 20 pixels, can adjust).
+        ar.width = arSize;
+        ar.height = arSize;
     } // **** end Player(Handler, float, float) constructor ****
 
     @Override
@@ -72,17 +84,14 @@ public class Player extends Creature {
         if (attackTimer < attackCooldown) { // Check player's eligibility to attack (has 250 milliseconds passed?)
             return;
         }
+        attacking = false;
 
         // If inventory window is opened, don't want player to be able to attack.
         if (inventory.isActive()) {
             return;
         }
 
-        Rectangle cb = getCollisionBounds(0, 0); // cb means Collision Bounds of our player, no offsets.
-        Rectangle ar = new Rectangle(); // Temporary (local to this scope) Rectangle ar (short for Attack Rectangle).
-        int arSize = 20;    // Attack Rectangle's default size (we're using 20 pixels, can adjust).
-        ar.width = arSize;
-        ar.height = arSize;
+        cb = getCollisionBounds(0, 0); // cb means Collision Bounds of our player, no offsets.
 
         // Begin to check WHERE to draw that attack rectangle (up, down, left, or right of the player's collision box).
         // if-else statements mean player can only attack in one direction at a time (per tick() call).
@@ -95,15 +104,19 @@ public class Player extends Creature {
             // ar.y = Player's CollisionBox's y MINUS full AttackRectangle's height (aka arSize).
             ar.x = cb.x + (cb.width / 2) - (arSize / 2);
             ar.y = cb.y - arSize;
+            attacking = true;
         } else if (handler.getKeyManager().aDown) {     // If attack-DOWNWARD key is true...
             ar.x = cb.x + (cb.width / 2) - (arSize / 2);    //x-coordinate stays same (CENTERED), but y changes.
             ar.y = cb.y + cb.height;                        //y-coordinate starts 1-full-HEIGHT-downward of player's cb.y.
+            attacking = true;
         } else if (handler.getKeyManager().aLeft) {     // If attack-LEFTWARD key is true...
             ar.x = cb.x - arSize;                           //x-coordinate starts 1-full-ATTACKSIZE-left of player's cb.x.
             ar.y = cb.y + (cb.height / 2) - (arSize / 2);   //y-coordinate CENTERED.
+            attacking = true;
         } else if (handler.getKeyManager().aRight) {    // If attack-RIGHTWARD key is true...
             ar.x = cb.x + cb.width;                         //x-coordinate starts 1-full-player.width-right of player's cb.x.
             ar.y = cb.y + (cb.height / 2) - (arSize / 2);   //y-coordinate CENTERED.
+            attacking = true;
         } else {    // !!!@@@ Default else-clause: we don't want to
             return; //        run anything else from this method. @@@!!!
         }
@@ -166,7 +179,11 @@ public class Player extends Creature {
             // Initially it was (hard-coded) as the animationDown.getCurrentFrame()... so player ALWAYS shown as walking-down.
         g.drawImage(getCurrentAnimationFrame(), (int)(x - handler.getGameCamera().getxOffset()),
                 (int)(y - handler.getGameCamera().getyOffset()), width, height, null);
-
+        if (attacking) {
+            g.setColor(Color.RED);
+            g.fillRect((int)(ar.x - handler.getGameCamera().getxOffset()),
+                    (int)(ar.y - handler.getGameCamera().getyOffset()), arSize, arSize);
+        }
         // @@@ For TESTING PURPOSES we'll draw the visual of the bounding box (collision detection). @@@
         // Keep in mind that the bounds.x and bound.y is the starting point of pixels-shifted-into-the-image's x and y...
         // that's why there's the "x + " or "y + " in front of those arguments.
